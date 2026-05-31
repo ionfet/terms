@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1440" />
+  <title>TERMS a.s. — Technologie pro moderní svět</title>
+  <meta name="description" content="Navrhujeme a realizujeme technologická řešení pro průmysl a energetiku." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page" id="top">
+
+    <!-- ============================ ХЕДЕР / МЕНЮ ============================ -->
+    <header class="header">
+      <a class="brand" href="#top" aria-label="TERMS a.s.">
+        <img src="assets/img/logo-header.svg" alt="TERMS" />
+      </a>
+      <nav class="nav">
+        <div class="nav__group">
+          <button class="nav__item" type="button">
+            Energetika
+            <img class="chev" src="assets/img/chevron-down.svg" alt="" />
+          </button>
+          <div class="nav__dropdown">
+            <a href="#odvetvi">Fotovoltaické elektrárny</a>
+            <a href="#odvetvi">Bateriová úložiště</a>
+            <a href="#odvetvi">Nabíjecí stanice</a>
+            <a href="#odvetvi">Servis střídačů SMA</a>
+          </div>
+        </div>
+        <div class="nav__group">
+          <button class="nav__item" type="button">
+            Automatizace
+            <img class="chev" src="assets/img/chevron-down.svg" alt="" />
+          </button>
+          <div class="nav__dropdown">
+            <a href="#odvetvi">Návrh &amp; konstrukce</a>
+            <a href="#odvetvi">CNC výroba</a>
+            <a href="#odvetvi">3D tisk z plastu</a>
+            <a href="#odvetvi">Prototypy &amp; přípravky</a>
+          </div>
+        </div>
+        <div class="nav__group">
+          <button class="nav__item" type="button">
+            Strojní výroba
+            <img class="chev" src="assets/img/chevron-down.svg" alt="" />
+          </button>
+          <div class="nav__dropdown">
+            <a href="#odvetvi">Automatizace procesů</a>
+            <a href="#odvetvi">Robotická pracoviště</a>
+            <a href="#odvetvi">Zkušební a testovací systémy</a>
+            <a href="#odvetvi">Servis</a>
+          </div>
+        </div>
+        <div class="nav__group">
+          <a class="nav__item" href="#o-nas">O nás</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <img class="hero__img" src="assets/img/hero.png" alt="Technik v průmyslovém provozu" />
+      <div class="hero__inner">
+        <div class="hero__text">
+          <h1 class="display">Technologie<br />pro moderní svět</h1>
+          <p class="body-m">Navrhujeme a realizujeme technologická řešení pro průmysl
+            a energetiku. Od vývoje a konstrukce přes výrobu.</p>
+        </div>
+        <a class="btn btn--stripe hero__cta" href="#kontakt"><span class="btn__t">Kontaktujte nás</span></a>
+      </div>
+    </section>
+
+    <main>
+      <!-- ====================== STATY + LOGA ====================== -->
+      <section class="references reveal">
+        <div class="stats">
+          <div class="stat">
+            <span class="stat__num h2">30 + let</span>
+            <span class="stat__label body-l">zkušeností</span>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--tr"></span>
+          </div>
+          <div class="stat">
+            <span class="stat__num h2">10 000 +</span>
+            <span class="stat__label body-l">realizací</span>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--tr"></span>
+          </div>
+          <div class="stat">
+            <span class="stat__num h2">1 000 +</span>
+            <span class="stat__label body-l">klientů</span>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--tr"></span>
+          </div>
+          <div class="stat">
+            <span class="stat__num h2">15 +</span>
+            <span class="stat__label body-l">zemí</span>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--tr"></span>
+          </div>
+        </div>
+
+        <div class="logos">
+          <div class="logos__heading">
+            <span class="line"></span>
+            <span class="body-m">Trusted by leaders</span>
+            <span class="line"></span>
+          </div>
+          <div class="marquee">
+            <div class="marquee__track" id="logoTrack">
+              <!-- набор логотипов (дублируется в JS для бесшовной прокрутки) -->
+              <div class="logo logo--combined"><img class="sym" src="assets/img/partner-symbol.svg" alt="" /><img class="wm" src="assets/img/partner-logotype.svg" alt="" /></div>
+              <div class="logo logo--neues"><img src="assets/img/partner-neues.svg" alt="" /></div>
+              <div class="logo logo--group"><img src="assets/img/partner-group.svg" alt="" /></div>
+              <div class="logo logo--capa"><img src="assets/img/partner-capa2.svg" alt="" /></div>
+              <div class="logo logo--vector"><img src="assets/img/partner-vectorized.svg" alt="" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== ODVETVI (аккордеон) ====================== -->
+      <section class="odvetvi container reveal" id="odvetvi">
+        <div class="odvetvi__img" id="odvetviImg" style="background-image:url('assets/energetika.jpg')"></div>
+        <div class="odvetvi__content">
+          <h2 class="h1">Naše odvetví</h2>
+          <div class="accordion">
+            <div class="acc is-open" data-img="assets/energetika.jpg">
+              <button class="acc__head" type="button" aria-expanded="true">
+                <span class="acc__title title-l">Energetika</span>
+                <img class="acc__icon" src="assets/img/plus.svg" alt="" />
+              </button>
+              <div class="acc__body"><div class="acc__body-inner"><div class="acc__content">
+                <p class="acc__desc body-m">Navrhujeme a realizujeme technologická řešení pro průmysl a energetiku. Od vývoje a konstrukce přes výrobu až po automatizaci a dlouhodobý servis.</p>
+                <div class="chips">
+                <span class="chip">Fotovoltaické elektrárny</span>
+                <span class="chip">Bateriová úložiště</span>
+                <span class="chip">Řízení spotřeby energie</span>
+                <span class="chip">Nabíjecí stanice elektromobilům</span>
+                <span class="chip">Administrativa</span>
+                <span class="chip">Dotační poradenství a vyřízení dotací</span>
+                <span class="chip">Hybridní, ostrovní a záložní řešení</span>
+                <span class="chip">Servis a dlouhodobá péče</span>
+                <span class="chip">Servis střídačů SMA</span>
+              </div>
+                <a class="acc__more" href="#">Zjistit více <img src="assets/img/arrow-more.svg" alt="" /></a>
+              </div></div></div>
+            </div>
+            <div class="acc" data-img="assets/strojni-vyroba.jpg">
+              <button class="acc__head" type="button" aria-expanded="false">
+                <span class="acc__title title-l">Strojní výroba</span>
+                <img class="acc__icon" src="assets/img/plus.svg" alt="" />
+              </button>
+              <div class="acc__body"><div class="acc__body-inner"><div class="acc__content">
+                <p class="acc__desc body-m">Navrhujeme a realizujeme technologická řešení pro průmysl a energetiku. Od vývoje a konstrukce přes výrobu až po automatizaci a dlouhodobý servis.</p>
+                <div class="chips">
+                <span class="chip">Automatizace procesů</span>
+                <span class="chip">Robotická pracoviště</span>
+                <span class="chip">Zkušební a testovací systémy</span>
+                <span class="chip">Servis</span>
+              </div>
+                <a class="acc__more" href="#">Zjistit více <img src="assets/img/arrow-more.svg" alt="" /></a>
+              </div></div></div>
+            </div>
+            <div class="acc" data-img="assets/automatizace.jpg">
+              <button class="acc__head" type="button" aria-expanded="false">
+                <span class="acc__title title-l">Automatizace</span>
+                <img class="acc__icon" src="assets/img/plus.svg" alt="" />
+              </button>
+              <div class="acc__body"><div class="acc__body-inner"><div class="acc__content">
+                <p class="acc__desc body-m">Navrhujeme a realizujeme technologická řešení pro průmysl a energetiku. Od vývoje a konstrukce přes výrobu až po automatizaci a dlouhodobý servis.</p>
+                <div class="chips">
+                <span class="chip">Návrh &amp; konstrukce</span>
+                <span class="chip">CNC výroba</span>
+                <span class="chip">3D tisk z plastu</span>
+                <span class="chip">Prototypy &amp; přípravky</span>
+              </div>
+                <a class="acc__more" href="#">Zjistit více <img src="assets/img/arrow-more.svg" alt="" /></a>
+              </div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== WHY-US ====================== -->
+      <section class="why-us container reveal" id="proc-nam-verit">
+        <h2 class="why-us__title h1">Proč nám věřit</h2>
+        <div class="why-cards">
+          <div class="why-card">
+            <div class="why-card__icon"><img src="assets/img/why-us-icon.svg" alt="" /></div>
+            <div class="why-card__text">
+              <p class="h3">Týmy zkušených inženýrů</p>
+              <p class="body-m">S hlubokými znalostmi automatizace, energetiky a strojírenství, které sami navrhují i realizují.</p>
+            </div>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--tr"></span>
+          </div>
+          <div class="why-card">
+            <div class="why-card__icon"><img src="assets/img/why-us-icon.svg" alt="" /></div>
+            <div class="why-card__text">
+              <p class="h3">Týmy zkušených inženýrů</p>
+              <p class="body-m">S hlubokými znalostmi automatizace, energetiky a strojírenství, které sami navrhují i realizují.</p>
+            </div>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--tr"></span>
+          </div>
+          <div class="why-card">
+            <div class="why-card__icon"><img src="assets/img/why-us-icon.svg" alt="" /></div>
+            <div class="why-card__text">
+              <p class="h3">Týmy zkušených inženýrů</p>
+              <p class="body-m">S hlubokými znalostmi automatizace, energetiky a strojírenství, které sami navrhují i realizují.</p>
+            </div>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--tr"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== PROJECTS (карусель) ====================== -->
+      <section class="projects container reveal" id="realizace">
+        <div class="projects__info">
+          <h2 class="h1">Naše realizace</h2>
+          <p class="body-m">Est cillum eiusmod et elit reprehenderit. Quis sit non in tempor nostrud ex et laborum irure. Duis consectetur laborum consectetur.</p>
+        </div>
+        <div class="projects__container">
+          <div class="carousel-nav">
+            <button class="carousel-btn" id="prevBtn" type="button" aria-label="Předchozí">
+              <img src="assets/img/arrow-prev.svg" alt="" />
+            </button>
+            <button class="carousel-btn" id="nextBtn" type="button" aria-label="Další">
+              <img src="assets/img/arrow-next.svg" alt="" />
+            </button>
+          </div>
+          <div class="carousel-viewport">
+            <div class="carousel-track" id="projectsTrack">
+              <!-- проект 1 -->
+              <article class="project">
+                <div class="project__img" style="background-image:url('assets/img/project-1.png')"></div>
+                <div class="project__info">
+                  <div class="project__info-top">
+                    <span class="chip project__chip">Zkušební a testovací systémy</span>
+                    <div class="project__info-text">
+                      <h3 class="h2">Aliquip veniam in ut officia reprehenderit</h3>
+                      <p class="body-m">Nisi incididunt culpa cillum ea quis id tempor est esse occaecat sint nostrud. Voluptate est ullamco qui eiusmod ad laborum. Voluptate qui qui aliqua officia velit ullamco pariatur.</p>
+                    </div>
+                  </div>
+                  <a class="project__link" href="#">Další realizace Energetiky <img src="assets/img/arrow-more.svg" alt="" /></a>
+                </div>
+              </article>
+              <!-- проект 2 -->
+              <article class="project">
+                <div class="project__img" style="background-image:url('assets/img/project-2.jpg')"></div>
+                <div class="project__info">
+                  <div class="project__info-top">
+                    <span class="chip project__chip">Fotovoltaické elektrárny</span>
+                    <div class="project__info-text">
+                      <h3 class="h2">Aliquip veniam in ut officia reprehenderit</h3>
+                      <p class="body-m">Nisi incididunt culpa cillum ea quis id tempor est esse occaecat sint nostrud. Voluptate est ullamco qui eiusmod ad laborum. Voluptate qui qui aliqua officia velit ullamco pariatur.</p>
+                    </div>
+                  </div>
+                  <a class="project__link" href="#">Další realizace Energetiky <img src="assets/img/arrow-more.svg" alt="" /></a>
+                </div>
+              </article>
+              <!-- проект 3 -->
+              <article class="project">
+                <div class="project__img" style="background-image:url('assets/img/project-1.png')"></div>
+                <div class="project__info">
+                  <div class="project__info-top">
+                    <span class="chip project__chip">Robotická pracoviště</span>
+                    <div class="project__info-text">
+                      <h3 class="h2">Aliquip veniam in ut officia reprehenderit</h3>
+                      <p class="body-m">Nisi incididunt culpa cillum ea quis id tempor est esse occaecat sint nostrud. Voluptate est ullamco qui eiusmod ad laborum. Voluptate qui qui aliqua officia velit ullamco pariatur.</p>
+                    </div>
+                  </div>
+                  <a class="project__link" href="#">Další realizace Strojní výroby <img src="assets/img/arrow-more.svg" alt="" /></a>
+                </div>
+              </article>
+              <!-- проект 4 -->
+              <article class="project">
+                <div class="project__img" style="background-image:url('assets/img/project-2.jpg')"></div>
+                <div class="project__info">
+                  <div class="project__info-top">
+                    <span class="chip project__chip">Bateriová úložiště</span>
+                    <div class="project__info-text">
+                      <h3 class="h2">Aliquip veniam in ut officia reprehenderit</h3>
+                      <p class="body-m">Nisi incididunt culpa cillum ea quis id tempor est esse occaecat sint nostrud. Voluptate est ullamco qui eiusmod ad laborum. Voluptate qui qui aliqua officia velit ullamco pariatur.</p>
+                    </div>
+                  </div>
+                  <a class="project__link" href="#">Další realizace Energetiky <img src="assets/img/arrow-more.svg" alt="" /></a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================== CONTACT (форма) ====================== -->
+      <div class="contact-wrap container reveal" id="kontakt">
+        <section class="contact">
+          <div class="contact__header">
+            <div class="contact__intro">
+              <h2 class="h1">Napište nám</h2>
+              <p class="body-m">We’d love to hear from you — send us<br />a message and we’ll be in touch soon.</p>
+            </div>
+            <div class="contact__general">
+              <span class="label">GENERAL CONTACT</span>
+              <a class="mail title-l" href="mailto:terms@terms.eu">terms@terms.eu</a>
+            </div>
+          </div>
+
+          <form class="contact__form" id="contactForm" novalidate>
+            <div class="fields">
+              <div class="field-row">
+                <div class="field">
+                  <label class="label-l" for="f-name">Jméno a příjmení</label>
+                  <input id="f-name" name="name" type="text" placeholder="Josef Boblist" required />
+                </div>
+                <div class="field">
+                  <label class="label-l" for="f-company">Název společnosti</label>
+                  <input id="f-company" name="company" type="text" placeholder="Bolbist s.r.o" />
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label-l" for="f-email">E-mail</label>
+                  <input id="f-email" name="email" type="email" placeholder="boblist@boblist.com" required />
+                </div>
+                <div class="field">
+                  <label class="label-l" for="f-phone">Telefon</label>
+                  <input id="f-phone" name="phone" type="tel" placeholder="+420 123 321 233" />
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field field--full">
+                  <label class="label-l" for="f-message">Zpráva</label>
+                  <textarea id="f-message" name="message" placeholder="Napište nám, s čím vám můžeme pomoci…" required></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="contact__footer">
+              <p class="contact__note" id="formNote">Thank you for your message.<br />We will get back to you within 24 hours.</p>
+              <button class="btn btn--stripe" type="submit"><span class="btn__t">Odeslat</span></button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- ====================== ABOUT ====================== -->
+      <section class="about container reveal" id="o-nas">
+        <img class="about__img" src="assets/img/about.png" alt="Sídlo TERMS a.s." />
+        <div class="about__text">
+          <div class="about__group">
+            <h2 class="h1">TERMS a.s.</h2>
+            <div class="body body-m">
+              <p>Jsme technologická firma zaměřená na energetiku, průmyslovou automatizaci a strojní výrobu.</p>
+              <p>Navrhujeme a realizujeme technicky náročné projekty na míru – od prvního návrhu až po dlouhodobý provoz a servis.</p>
+              <p>Působíme více než 30 let na trhu a stojíme za stovkami realizací v Česku i zahraničí.</p>
+            </div>
+          </div>
+          <a class="btn btn--stripe-dark" href="#kontakt"><span class="btn__t">Zjistit více</span></a>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================ FOOTER ============================ -->
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__claim">
+          <img class="logo-big" src="assets/img/logo-footer.svg" alt="TERMS" />
+          <span class="know-how h1">We Know How</span>
+        </div>
+        <div class="footer__cols">
+          <div class="footer__business">
+            <div class="info">
+              <span class="strong">Provozovna i sídlo</span>
+              <span>TERMS a.s.<br />Planá 67, 370 01 Planá (u Českých Budějovic)</span>
+              <span>IČ: 144 99 037, DIČ: CZ 144 99 037<br />DUNS: 360567775</span>
+              <span>Společnost je zapsána v Obchodním rejstříku, vedeném u Krajského soudu v Českých Budějovicích od 1.1.2002, spisová značka B.1236</span>
+            </div>
+            <img class="eu" src="assets/img/eu-badge.png" alt="Spolufinancováno Evropskou unií" />
+          </div>
+          <nav class="footer__nav title-m">
+            <div class="footer__nav-col">
+              <a href="#top">Úvod</a>
+              <a href="#odvetvi">Energetika</a>
+              <a href="#odvetvi">Automatizace</a>
+              <a href="#realizace">SMA servis</a>
+              <a href="#odvetvi">Strojní výroba</a>
+            </div>
+            <div class="footer__nav-col">
+              <a href="#o-nas">O nás</a>
+              <a href="#">Kariéra</a>
+              <a href="#">Veřejné dokumenty</a>
+            </div>
+          </nav>
+        </div>
+        <div class="footer__bottom">
+          <span class="copy">© 2026 TERMS a.s. All rights reserved.</span>
+          <div class="footer__links">
+            <a href="#">Veřejné dokumenty</a>
+            <a href="#">Obchodní podmínky</a>
+            <a href="#">Ochrana osobních údajů GDPR</a>
+            <a href="#">Nastavení cookies</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

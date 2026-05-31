@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# editor / OS cruft
+*.log
+Thumbs.db
+
+# dependencies (none required — прототип без сборки)
+node_modules/
