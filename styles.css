@@ -1,14 +1,14 @@
 /* =========================================================================
-   TERMS a.s. — лендинг (десктоп 1440)
-   Прототип по макету Figma. Дизайн-токены вытащены из переменных файла.
+   TERMS a.s. — landing page (responzivní 375→1440)
+   Prototyp podle Figma předlohy. Design tokeny převzaty ze souboru proměnných.
    ========================================================================= */
 
 /* ----------------------------------------------------------------------- */
-/* Шрифт «Zed Text L» — 4 реальных начертания из assets/.                   */
-/* Ширину «Semi-Wide» разводим через дескриптор font-stretch:               */
-/*   обычная ширина => font-stretch: normal (100%)                          */
-/*   semi-wide       => font-stretch: 112.5%  (заголовки)                    */
-/* Браузер сам выбирает нужный файл по паре (font-weight + font-stretch).    */
+/* Font „Zed Text L" — 4 reálné řezy z assets/.                             */
+/* Šířku „Semi-Wide" řešíme přes deskriptor font-stretch:                   */
+/*   běžná šířka  => font-stretch: normal (100%)                            */
+/*   semi-wide    => font-stretch: 112.5%  (nadpisy)                        */
+/* Prohlížeč si sám vybere soubor podle dvojice (font-weight + font-stretch).*/
 /* ----------------------------------------------------------------------- */
 @font-face {
   font-family: "Zed Text L";
@@ -32,10 +32,10 @@
 }
 
 /* ----------------------------------------------------------------------- */
-/* Токены                                                                   */
+/* Tokeny                                                                   */
 /* ----------------------------------------------------------------------- */
 :root {
-  /* Terms Blue scale */
+  /* Škála Terms Blue */
   --blue-50:  #ECF7FF;
   --blue-200: #B3E0FF;
   --blue-400: #43B0FF;
@@ -53,16 +53,16 @@
   --font: "Zed Text L", system-ui, -apple-system,
           "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  /* геометрия макета — fluid, артборд капится на 1440 */
+  /* geometrie layoutu — fluid, artboard je capnutý na 1440 */
   --page-w: 1440px;
-  --gutter: clamp(20px, 5vw, 40px);                                 /* боковые поля: 20 на мобилке → 40 на десктопе */
-  --content-w: calc(min(100%, var(--page-w)) - var(--gutter) * 2);  /* полезная ширина контента */
+  --gutter: clamp(20px, 5vw, 40px);                                 /* boční okraje: 20 na mobilu → 40 na desktopu */
+  --content-w: calc(min(100%, var(--page-w)) - var(--gutter) * 2);  /* užitečná šířka obsahu */
   --radius: 4px;
-  --section-gap: clamp(88px, 11vw, 160px);                          /* вертикальный ритм между секциями */
+  --section-gap: clamp(88px, 11vw, 160px);                          /* vertikální rytmus mezi sekcemi */
 }
 
 /* ----------------------------------------------------------------------- */
-/* Сброс / база                                                             */
+/* Reset / základ                                                           */
 /* ----------------------------------------------------------------------- */
 *,
 *::before,
@@ -84,15 +84,15 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
 ul { margin: 0; padding: 0; list-style: none; }
 p  { margin: 0; }
-h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем дефолтные margin/bold у заголовков */
+h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* odstraňujeme výchozí margin/bold u nadpisů */
 
-/* Артборд тянется до 1440 и центрируется */
+/* Artboard se táhne do 1440 a centruje se */
 .page {
   width: 100%;
   max-width: var(--page-w);
   margin: 0 auto;
   position: relative;
-  overflow: hidden;            /* клип hero-фото и т.п. за правым краем */
+  overflow: hidden;            /* ořez hero fotky apod. za pravým okrajem */
 }
 
 .container {
@@ -101,11 +101,11 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 
 /* ----------------------------------------------------------------------- */
-/* Типографика (по стилям из Figma)                                         */
-/* "Semi-Wide" => font-stretch: semi-expanded (112.5%)                       */
-/* tracking в Figma задан в %: -2% => -0.02em, -1% => -0.01em               */
+/* Typografie (podle stylů z Figma)                                         */
+/* "Semi-Wide" => font-stretch: semi-expanded (112.5%)                      */
+/* tracking je ve Figma zadán v %: -2% => -0.02em, -1% => -0.01em           */
 /* ----------------------------------------------------------------------- */
-/* размеры тянутся между мобайлом (375) и десктопом (1440) через clamp */
+/* velikosti se táhnou mezi mobilem (375) a desktopem (1440) přes clamp */
 .display {
   font-weight: 700; font-stretch: 112.5%;
   font-size: clamp(36px, 29px + 1.88vw, 56px); line-height: 1.25; letter-spacing: -0.02em;
@@ -142,7 +142,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 
 /* ----------------------------------------------------------------------- */
-/* Кнопки (база + хуки ::before/::after под будущие анимации)               */
+/* Tlačítka (základ + háčky ::before/::after pro budoucí animace)           */
 /* ----------------------------------------------------------------------- */
 .btn {
   position: relative;
@@ -158,18 +158,18 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   isolation: isolate;
   transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
 }
-/* свободные слои под кастомные hover-эффекты (настроим позже) */
+/* volné vrstvy pro vlastní hover efekty (doladíme později) */
 .btn::before,
 .btn::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 
-.btn--light {                       /* белая кнопка, синий текст */
+.btn--light {                       /* bílé tlačítko, modrý text */
   background: var(--white);
   border-color: var(--blue-50);
   color: var(--blue-800);
 }
 .btn--light:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(3,69,217,.18); }
 
-.btn--dark {                        /* синяя кнопка, белый текст */
+.btn--dark {                        /* modré tlačítko, bílý text */
   background: var(--blue-800);
   color: var(--white);
 }
@@ -177,19 +177,19 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 
 .btn:active { transform: translateY(0); }
 
-/* --- Кнопки с диагональной заливкой (sweep) из левого верхнего угла --- */
-/* светлая: белая → синяя заливка #0068FF, текст белеет (hero, форма) */
+/* --- Tlačítka s diagonální výplní (sweep) z levého horního rohu --- */
+/* světlé: bílá → modrá výplň #0068FF, text zbělá (hero, formulář) */
 .btn--stripe {
   background-color: #fff;
   color: var(--blue-800);
   border-color: var(--blue-50);
   isolation: isolate;
-  transition: color .2s ease .15s;     /* текст инвертируется с задержкой — после заливки */
+  transition: color .2s ease .15s;     /* text se invertuje se zpožděním — až po výplni */
 }
 .btn--stripe:hover { color: #fff; }
 .btn--stripe::after { background: var(--blue-600); }   /* #0068FF */
 
-/* тёмная: синяя → белая заливка, текст синеет (секция перед футером) */
+/* tmavé: modrá → bílá výplň, text zmodrá (sekce před footerem) */
 .btn--stripe-dark {
   background-color: var(--blue-800);
   color: #fff;
@@ -200,10 +200,10 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .btn--stripe-dark:hover { color: var(--blue-800); }
 .btn--stripe-dark::after { background: #fff; }
 
-/* текст держим над заливкой (надёжно и для <a>, и для <button>) */
+/* text držíme nad výplní (spolehlivě pro <a> i <button>) */
 .btn--stripe .btn__t,
 .btn--stripe-dark .btn__t { position: relative; z-index: 1; }
-/* общая геометрия косой заливки */
+/* společná geometrie šikmé výplně */
 .btn--stripe::after,
 .btn--stripe-dark::after {
   content: "";
@@ -219,10 +219,10 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 
 /* ----------------------------------------------------------------------- */
-/* Декоративные угловые скобки на карточках (#43B0FF)                        */
+/* Dekorativní rohové závorky na kartách (#43B0FF)                          */
 /* ----------------------------------------------------------------------- */
-/* Уголки нарисованы бордерами — радиус скругления всегда = радиусу бокса,
-   а на hover растёт только длина «усов» (20 → 40px). */
+/* Rohy jsou nakreslené pomocí border — poloměr zaoblení je vždy = poloměru
+   boxu, na hover roste jen délka „fousků" (20 → 40px). */
 .corner {
   position: absolute;
   width: 20px; height: 20px;
@@ -243,26 +243,26 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 
 /* =======================================================================
-   ХЕДЕР / МЕНЮ  (плавает поверх hero)
+   HLAVIČKA / MENU  (plave nad hero)
    ======================================================================= */
 .header {
-  position: fixed;            /* всегда fixed — никаких рывков при смене позиции */
-  top: 40px;                  /* у самого верха парит над hero как раньше */
+  position: fixed;            /* vždy fixed — žádné trhání při změně pozice */
+  top: 40px;                  /* úplně nahoře plave nad hero jako dřív */
   left: 50%;
   transform: translateX(-50%);
   width: var(--content-w);
-  z-index: 90;                /* выше оверлей-меню (80), чтобы гамбургер/крестик были кликабельны */
+  z-index: 90;                /* výš než overlay menu (80), aby hamburger/křížek byly klikatelné */
   display: flex;
   align-items: stretch;
   gap: 14px;
   transition: transform .4s cubic-bezier(.4, 0, .2, 1), top .3s ease;
 }
-/* скролл вверх — закреплён у края экрана */
+/* scroll nahoru — ukotvený u okraje obrazovky */
 .header.is-pinned { top: 16px; }
-/* лёгкая тень, чтобы плашки читались поверх светлых секций */
+/* lehký stín, aby plošky byly čitelné nad světlými sekcemi */
 .header.is-pinned .brand,
 .header.is-pinned .nav { box-shadow: 0 8px 24px rgba(3, 69, 217, .10); }
-/* скролл вниз — плавно уезжает за верхний край */
+/* scroll dolů — plynule odjíždí za horní okraj */
 .header.is-hidden { transform: translateX(-50%) translateY(-200%); }
 .brand {
   display: flex; align-items: center;
@@ -299,10 +299,10 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .nav__item:hover .chev { transform: rotate(180deg); }
 
-/* группа = контекст позиционирования, чтобы дропдаун котвился под своим пунктом (левый край nav), а не под лого */
+/* skupina = kontext pozicování, aby se dropdown ukotvil pod svou položkou (levý okraj nav), ne pod logem */
 .nav__group { position: relative; }
 
-/* выпадающее подменю */
+/* rozbalovací podmenu */
 .nav__dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -328,7 +328,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .nav__dropdown a:hover { background: var(--blue-50); }
 
-/* --- гамбургер (виден только на мобайле) --- */
+/* --- hamburger (viditelný jen na mobilu) --- */
 .nav-toggle {
   display: none;
   flex: none;
@@ -349,7 +349,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* --- полноэкранное оверлей-меню (мобайл) --- */
+/* --- celoobrazovkové overlay menu (mobil) --- */
 .mobile-menu {
   position: fixed; inset: 0; z-index: 80;
   background: var(--blue-800);
@@ -376,19 +376,21 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   position: relative;
   background: var(--blue-800);
   overflow: hidden;
-  display: flex; align-items: flex-end;            /* контент прижат к низу */
-  min-height: clamp(440px, 36.2vw, 521px);
-  padding-top: clamp(104px, 11vw, 150px);          /* резерв сверху под фикс-меню — текст не лезет под меню */
+  display: flex; align-items: flex-end;            /* obsah přitisknutý dolů */
+  /* výška = max(min-height, rezerva-pod-menu + obsah + spodní padding);
+     na úzkých roste s počtem řádků titulku, takže nikdy nekoliduje s menu */
+  min-height: clamp(460px, 36.2vw, 521px);
+  padding-top: clamp(120px, 12vw, 156px);          /* rezerva nahoře pod fixní menu (header má dole ~80px) */
 }
 .hero__img {
   position: absolute;
   top: 0; right: 0; height: 100%;
-  width: 50%;                                      /* ровно половина hero */
+  width: 50%;                                      /* přesně polovina hero */
   object-fit: cover; object-position: center;
 }
 .hero__inner {
   position: relative; z-index: 1;
-  width: 50%;                                      /* левая половина: текст всегда рядом, не под фото */
+  width: 50%;                                      /* levá polovina: text je vždy vedle, ne pod fotkou */
   padding: 0 clamp(28px, 3vw, 48px) 48px var(--gutter);
   display: flex; flex-direction: column;
   gap: clamp(20px, 2.4vw, 28px);
@@ -399,11 +401,11 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   color: var(--white);
 }
 .hero__text .display { color: var(--white); }
-.hero__text .body-m { color: var(--white); }
+.hero__text .body-m { color: var(--white); max-width: 520px; }
 .hero__cta { align-self: flex-start; }
 
 /* =======================================================================
-   REFERENCES — статистика + логотипы
+   REFERENCE — statistika + loga
    ======================================================================= */
 .references {
   width: var(--content-w);
@@ -411,8 +413,8 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   display: flex; flex-direction: column; align-items: center;
   gap: clamp(44px, 5vw, 68px);
 }
-/* карточки статистики — flex с переносом и центрированием:
-   неполный ряд (напр. 3 + 1) выравнивается по центру, а не липнет влево */
+/* karty statistik — flex se zalamováním a centrováním:
+   neúplný řádek (např. 3 + 1) se zarovná na střed, ne doleva */
 .stats {
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: clamp(16px, 2.2vw, 32px);
@@ -432,16 +434,16 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   transition: background-color .4s cubic-bezier(.4, 0, .2, 1),
               transform .4s cubic-bezier(.4, 0, .2, 1);
 }
-/* hover: фон светлеет, бокс чуть увеличивается, уголки вырастают 20 → 40px — сдержанно */
+/* hover: pozadí zesvětlá, box se mírně zvětší, rohy narostou 20 → 40px — decentně */
 .stat:hover {
   background: #edf2fd;
   transform: scale(1.02);
 }
 .stat:hover .corner { width: 40px; height: 40px; }
-.stat__num { white-space: nowrap; font-size: 32px; }   /* числа статов держим на 32px и на мобилке */
+.stat__num { white-space: nowrap; font-size: 32px; }   /* čísla statistik držíme na 32px i na mobilu */
 .stat__label { color: var(--blue-800); }
 
-/* блок логотипов */
+/* blok log */
 .logos {
   width: 100%;
   display: flex; flex-direction: column; align-items: center; gap: clamp(36px, 4vw, 56px);
@@ -453,7 +455,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .logos__heading .line { flex: 1; height: 1px; background: var(--blue-200); }
 .logos__heading span { color: var(--blue-800); white-space: nowrap; }
 
-/* бегущая строка логотипов */
+/* běžící pás log */
 .marquee {
   position: relative;
   width: 100%;
@@ -480,7 +482,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .logo--vector img     { height: 36px; }
 
 /* =======================================================================
-   ODVETVI — отрасли (аккордеон)
+   ODVĚTVÍ — obory (akordeon)
    ======================================================================= */
 .odvetvi {
   margin-top: var(--section-gap);
@@ -491,13 +493,13 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   position: relative;
   flex: none;
   width: clamp(340px, 40%, 550px);
-  height: clamp(460px, 50vw, 711px);   /* фиксировано по высоте — не растягивается за аккордеоном */
+  height: clamp(460px, 50vw, 711px);   /* pevná výška — neroztahuje se za akordeonem */
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--blue-50) center/cover no-repeat;
 }
-/* Смена изображения: входящее (::after) + синий градиентный край (::before),
-   едут вместе диагональю под ~33° из левого верхнего угла. */
+/* Změna obrázku: příchozí (::after) + modrý gradientní okraj (::before)
+   jedou společně diagonálou pod ~33° z levého horního rohu. */
 .odvetvi__img::before,
 .odvetvi__img::after {
   content: "";
@@ -505,9 +507,9 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   pointer-events: none;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-size: 300% 300%;     mask-size: 300% 300%;
-  -webkit-mask-position: 100% 100%; mask-position: 100% 100%;   /* спрятано (элемент всегда внутри маски) */
+  -webkit-mask-position: 100% 100%; mask-position: 100% 100%;   /* skryto (prvek je vždy uvnitř masky) */
 }
-/* входящее изображение */
+/* příchozí obrázek */
 .odvetvi__img::after {
   z-index: 1;
   background-image: var(--next-img);
@@ -515,7 +517,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   -webkit-mask-image: linear-gradient(123deg, #000 0 40%, transparent 60% 100%);
           mask-image: linear-gradient(123deg, #000 0 40%, transparent 60% 100%);
 }
-/* синий брендовый градиентный край на ведущей кромке */
+/* modrý brandový gradientní okraj na čele */
 .odvetvi__img::before {
   z-index: 2;
   background: linear-gradient(123deg, var(--blue-600), var(--blue-800));
@@ -524,7 +526,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .odvetvi__img.is-swapping::before,
 .odvetvi__img.is-swapping::after {
-  -webkit-mask-position: 0% 0%; mask-position: 0% 0%;           /* проявлено (полное покрытие) */
+  -webkit-mask-position: 0% 0%; mask-position: 0% 0%;           /* odhaleno (plné pokrytí) */
   -webkit-transition: -webkit-mask-position .85s cubic-bezier(.4, 0, .2, 1);
           transition: mask-position .85s cubic-bezier(.4, 0, .2, 1);
 }
@@ -555,7 +557,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   transition: grid-template-rows .4s ease;
 }
 .acc.is-open .acc__body { grid-template-rows: 1fr; }
-.acc__body-inner { overflow: hidden; }   /* только обрезка для grid-анимации */
+.acc__body-inner { overflow: hidden; }   /* jen ořez pro grid animaci */
 .acc__content {
   display: flex; flex-direction: column; gap: 42px;
   padding-bottom: 20px;
@@ -587,7 +589,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .chip:hover { background: var(--blue-50); border-color: var(--blue-400); }
 
 /* =======================================================================
-   WHY-US — «Proč nám věřit»
+   WHY-US — „Proč nám věřit"
    ======================================================================= */
 .why-us {
   margin-top: var(--section-gap);
@@ -612,7 +614,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   transition: background-color .4s cubic-bezier(.4, 0, .2, 1),
               transform .4s cubic-bezier(.4, 0, .2, 1);
 }
-/* тот же сдержанный hover, что и у плашек */
+/* stejný decentní hover jako u plošek */
 .why-card:hover {
   background: #edf2fd;
   transform: scale(1.02);
@@ -624,7 +626,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .why-card__text p:last-child { color: var(--blue-800); }
 
 /* =======================================================================
-   PROJECTS — «Naše realizace» (карусель)
+   PROJEKTY — „Naše realizace" (karusel)
    ======================================================================= */
 .projects { margin-top: var(--section-gap); }
 .projects__info {
@@ -654,13 +656,13 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .carousel-track {
   display: flex; gap: clamp(16px, 1.8vw, 24px);
-  align-items: stretch;                       /* карточки равной высоты */
+  align-items: stretch;                       /* karty stejné výšky */
   transition: transform .5s cubic-bezier(.4, 0, .2, 1);
 }
 .project {
   flex: none;
   display: flex; gap: clamp(16px, 1.8vw, 24px);
-  width: min(1024px, 88%);                     /* одна карточка + «выглядывающая» следующая */
+  width: min(1024px, 88%);                     /* jedna karta + „vykukující" další */
 }
 .project__img {
   flex: 0 0 44%;
@@ -688,13 +690,13 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   position: relative; isolation: isolate;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--blue-400);
+  border-bottom: 1px solid var(--blue-800);
   font-weight: 700; font-size: 16px; letter-spacing: -0.01em;
   transition: padding .45s cubic-bezier(.25, 0, 0, 1), color .2s ease .15s, border-color .25s ease;
 }
 .project__link img { width: 22px; height: 22px; transition: filter .2s ease .15s; }
 
-/* --- Ссылки-подчёркивания → кнопка с косой заливкой на hover --- */
+/* --- Podtržené odkazy → tlačítko se šikmou výplní na hover --- */
 .acc__more::after,
 .project__link::after {
   content: "";
@@ -706,16 +708,16 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   z-index: -1;
   pointer-events: none;
 }
-/* hover: бока 0 → 20px, въезжает заливка, текст белеет */
+/* hover: boky 0 → 20px, najede výplň, text zbělá */
 .acc__more:hover,
 .project__link:hover { padding: 8px 12px 8px 20px; color: #fff; border-bottom-color: transparent; }
 .acc__more:hover img,
-.project__link:hover img { filter: brightness(0) invert(1); }   /* стрелка → белая */
+.project__link:hover img { filter: brightness(0) invert(1); }   /* šipka → bílá */
 .acc__more:hover::after,
 .project__link:hover::after { clip-path: polygon(0% 0%, 200% 0%, 100% 100%, 0% 100%); }
 
 /* =======================================================================
-   CONTACT — «Napište nám» (форма)
+   KONTAKT — „Napište nám" (formulář)
    ======================================================================= */
 .contact-wrap { margin-top: var(--section-gap); }
 .contact {
@@ -780,7 +782,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 
 /* =======================================================================
-   ABOUT — «TERMS a.s.»
+   O NÁS — „TERMS a.s."
    ======================================================================= */
 .about {
   margin-top: var(--section-gap);
@@ -798,7 +800,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .about__group { display: flex; flex-direction: column; gap: clamp(24px, 3vw, 32px); color: var(--blue-800); }
 .about__group .body { display: flex; flex-direction: column; gap: 12px; }
-.about__text > .btn { align-self: flex-start; }   /* кнопка по содержимому, не на всю ширину */
+.about__text > .btn { align-self: flex-start; }   /* tlačítko podle obsahu, ne na celou šířku */
 
 /* =======================================================================
    FOOTER
@@ -814,8 +816,8 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
 }
 .footer__claim .logo-big { height: 60px; width: auto; }
-.footer__claim .know-how { color: var(--white); white-space: nowrap; font-weight: 400; }   /* Semi-Wide Regular, не Bold */
-.footer-logo-m { display: none; }   /* комбинированный лого+«We Know How» — только мобайл/планшет */
+.footer__claim .know-how { color: var(--white); white-space: nowrap; font-weight: 400; }   /* Semi-Wide Regular, ne Bold */
+.footer-logo-m { display: none; }   /* kombinované logo + „We Know How" — jen mobil/tablet */
 
 .footer__cols {
   border-top: 1px solid var(--blue-600);
@@ -848,7 +850,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .footer__links a:hover { opacity: 1; }
 
 /* =======================================================================
-   Появление секций при скролле
+   Objevení sekcí při scrollu
    ======================================================================= */
 .reveal {
   opacity: 0;
@@ -861,54 +863,53 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  /* лента логотипов крутится всегда — это часть дизайна */
+  /* pás log se točí vždy — je to součást designu */
 }
 
 /* =======================================================================
-   МОБАЙЛ / УЗКИЙ ПЛАНШЕТ ≤ 900px — одноколоночная раскладка
-   (десктопная сетка плавно сжимается через clamp/% до этого порога)
+   MOBIL / ÚZKÝ TABLET ≤ 900px — jednosloupcové rozložení
+   (desktopová mřížka se plynule smršťuje přes clamp/% až k této hranici)
    ======================================================================= */
 @media (min-width: 901px) {
-  .mobile-menu { display: none; }   /* на десктопе оверлея нет вовсе */
+  .mobile-menu { display: none; }   /* na desktopu overlay vůbec není */
 }
 
 @media (max-width: 900px) {
-  /* ХЕДЕР: прячем десктоп-меню, показываем гамбургер в правом углу */
+  /* HLAVIČKA: skryjeme desktop menu, ukážeme hamburger v pravém rohu */
   .nav { display: none; }
   .nav-toggle { display: flex; margin-left: auto; }
   .header { top: 20px; }
-  body.nav-open { overflow: hidden; }   /* стоп-скролл фона при открытом меню */
+  body.nav-open { overflow: hidden; }   /* stop-scroll pozadí při otevřeném menu */
 
-  /* STATS / WHY-US: на узких карточки тянутся — 2 в ряд на планшете, 1 на телефоне */
+  /* STATS / WHY-US: na úzkých se karty táhnou — 2 v řadě na tabletu, 1 na telefonu */
   .stat { flex: 1 1 280px; width: auto; }
-  .why-card { flex: 1 1 300px; width: auto; max-width: 480px; }   /* осиротевшая карта не растягивается на всю ширину */
+  .why-card { flex: 1 1 300px; width: auto; max-width: 480px; }   /* osamělá karta se neroztahuje na celou šířku */
 
-  /* HERO: текст сверху, фото на всю ширину снизу */
+  /* HERO: text nahoře, fotka na celou šířku dole */
   .hero { flex-direction: column; align-items: stretch; min-height: 0; padding-top: 0; }
   .hero__inner { width: 100%; padding: clamp(92px, 26vw, 128px) var(--gutter) clamp(28px, 8vw, 44px); }
-  .hero__text .body-m { max-width: 520px; }   /* не растягивать абзац на всю ширину */
   .hero__img { position: static; width: 100%; height: clamp(240px, 64vw, 360px); }
 
-  /* ODVETVI: только аккордеон, картинку слева убираем */
+  /* ODVĚTVÍ: jen akordeon, obrázek vlevo skryjeme */
   .odvetvi { gap: 0; }
   .odvetvi__img { display: none; }
   .acc__desc { max-width: 520px; }
 
-  /* PROJECTS: карточка в столбик — фото сверху, инфо снизу; стрелки по центру снизу */
+  /* PROJEKTY: karta na výšku — fotka nahoře, info dole; šipky na střed dole */
   .projects__container { align-items: center; }
   .carousel-nav { order: 2; }
-  .project { flex-direction: column; width: min(420px, 92%); gap: 0; }   /* фото и инфо вплотную */
+  .project { flex-direction: column; width: min(420px, 92%); gap: 0; }   /* fotka a info těsně u sebe */
   .project__img {
     flex: none; width: 100%; min-height: 0; height: clamp(180px, 52vw, 220px);
-    border-radius: var(--radius) var(--radius) 0 0;   /* скруглён только верх */
+    border-radius: var(--radius) var(--radius) 0 0;   /* zaoblený jen vršek */
   }
   .project__info {
     gap: clamp(24px, 7vw, 40px);
-    border-radius: 0 0 var(--radius) var(--radius);   /* скруглён только низ — карточка цельная */
+    border-radius: 0 0 var(--radius) var(--radius);   /* zaoblený jen spodek — karta je celistvá */
     padding-block: 28px;
   }
 
-  /* CONTACT: стек, поля по одному в ряд, кнопка на всю ширину */
+  /* KONTAKT: stack, pole po jednom v řadě, tlačítko na celou šířku */
   .contact { flex-direction: column; }
   .contact__header { width: 100%; max-width: none; }
   .contact__form { width: 100%; max-width: none; align-items: stretch; }
@@ -916,20 +917,20 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   .contact__footer { align-items: stretch; }
   .contact__footer .btn { width: 100%; }
 
-  /* ABOUT: фото сверху, текст и кнопка снизу (кнопка на всю ширину) */
+  /* O NÁS: fotka nahoře, text a tlačítko dole (tlačítko na celou šířku) */
   .about { flex-direction: column; align-items: stretch; gap: clamp(24px, 6vw, 40px); }
   .about__img { flex: none; width: 100%; height: clamp(220px, 56vw, 320px); }
   .about__text { max-width: none; }
   .about__group .body { max-width: 520px; }
   .about__text > .btn { align-self: stretch; }
 
-  /* FOOTER: всё в один столбец */
+  /* FOOTER: vše do jednoho sloupce */
   .footer__claim { flex-direction: column; align-items: flex-start; gap: 12px; }
   .footer__claim .logo-big,
-  .footer__claim .know-how { display: none; }              /* на мобайле — комбинированный лого */
+  .footer__claim .know-how { display: none; }              /* na mobilu — kombinované logo */
   .footer-logo-m { display: block; width: 100%; max-width: 240px; height: auto; }
   .footer__cols { flex-direction: column; gap: clamp(32px, 8vw, 48px); }
-  .footer__nav { order: -1; flex-direction: column; gap: 10px; }   /* как внутри footer__nav-col — единый ровный список */
+  .footer__nav { order: -1; flex-direction: column; gap: 10px; }   /* jako uvnitř footer__nav-col — jeden rovnoměrný seznam */
   .footer__business { width: 100%; }
   .footer__business .info { max-width: 520px; }
   .footer__business .eu { width: clamp(220px, 70vw, 251px); height: auto; }

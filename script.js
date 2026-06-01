@@ -1,36 +1,36 @@
 /* =========================================================================
-   TERMS a.s. — интерактив прототипа
+   TERMS a.s. — interaktivita prototypu
    ========================================================================= */
 (function () {
   "use strict";
 
   /* --------------------------------------------------------------------- */
-  /* 1. Аккордеон «Naše odvetví» (single-open)                              */
+  /* 1. Akordeon „Naše odvětví" (single-open)                               */
   /* --------------------------------------------------------------------- */
   const accItems = Array.from(document.querySelectorAll(".acc"));
   const odvImg = document.getElementById("odvetviImg");
 
-  // смена изображения отрасли: входящее проявляется диагональной градиентной маской
+  // změna obrázku odvětví: příchozí se odhaluje diagonální gradientní maskou
   let swapTimer = null;
   function setOdvetviImage(acc) {
     if (!odvImg) return;
     const src = acc.getAttribute("data-img");
     if (!src) return;
-    odvImg.style.setProperty("--next-img", "url('" + src + "')");  // входящее изображение в ::after
+    odvImg.style.setProperty("--next-img", "url('" + src + "')");  // příchozí obrázek v ::after
     odvImg.classList.remove("is-swapping");
-    void odvImg.offsetWidth;                                       // рестарт транзишна маски
+    void odvImg.offsetWidth;                                       // restart přechodu masky
     odvImg.classList.add("is-swapping");
     if (swapTimer) clearTimeout(swapTimer);
     swapTimer = setTimeout(function () {
-      odvImg.style.backgroundImage = "url('" + src + "')";         // фиксируем новое как базовое
-      odvImg.classList.remove("is-swapping");                       // прячем слои ::before/::after
+      odvImg.style.backgroundImage = "url('" + src + "')";         // nový obrázek zafixujeme jako základní
+      odvImg.classList.remove("is-swapping");                       // skryjeme vrstvy ::before/::after
     }, 950);
   }
 
   accItems.forEach((acc) => {
     const head = acc.querySelector(".acc__head");
     head.addEventListener("click", () => {
-      if (acc.classList.contains("is-open")) return;   // всегда одна открыта
+      if (acc.classList.contains("is-open")) return;   // vždy je otevřené jedno
       accItems.forEach((other) => {
         other.classList.remove("is-open");
         other.querySelector(".acc__head").setAttribute("aria-expanded", "false");
@@ -42,7 +42,7 @@
   });
 
   /* --------------------------------------------------------------------- */
-  /* 2. Карусель «Naše realizace»                                           */
+  /* 2. Karusel „Naše realizace"                                            */
   /* --------------------------------------------------------------------- */
   const track = document.getElementById("projectsTrack");
   const prevBtn = document.getElementById("prevBtn");
@@ -52,16 +52,16 @@
     const projects = Array.from(track.children);
     let index = 0;
 
-    // межкарточный отступ берём из CSS (он fluid: clamp 16→24)
+    // mezeru mezi kartami bereme z CSS (je fluid: clamp 16→24)
     function gap() {
       return parseFloat(getComputedStyle(track).columnGap) || 0;
     }
     function step() {
-      // ширина одного проекта + текущий отступ
+      // šířka jedné karty + aktuální mezera
       return projects[0].getBoundingClientRect().width + gap();
     }
     function maxIndex() {
-      // не уезжаем за последний проект (учитываем «выглядывающий» след. слайд)
+      // nezajedeme za poslední projekt (počítáme s „vykukující" další kartou)
       const viewport = track.parentElement.getBoundingClientRect().width;
       const total = projects.length * step() - gap();
       const hidden = Math.max(0, total - viewport);
@@ -82,7 +82,7 @@
   }
 
   /* --------------------------------------------------------------------- */
-  /* 3. Бесшовная бегущая строка логотипов (дублируем набор)                */
+  /* 3. Nekonečně rolující pás log (duplikujeme sadu)                       */
   /* --------------------------------------------------------------------- */
   const logoTrack = document.getElementById("logoTrack");
   if (logoTrack) {
@@ -90,7 +90,7 @@
   }
 
   /* --------------------------------------------------------------------- */
-  /* 4. Форма «Napište nám» (валидация + состояние «отправлено»)            */
+  /* 4. Formulář „Napište nám" (validace polí)                              */
   /* --------------------------------------------------------------------- */
   const form = document.getElementById("contactForm");
   if (form) {
@@ -112,13 +112,13 @@
         }
       });
 
-      if (!ok) return;            // невалидно — поля подсвечены красным
+      if (!ok) return;            // nevalidní — pole jsou podbarvená červeně
 
-      // здесь позже подключим реальную отправку (fetch на endpoint)
+      // sem později napojíme reálné odeslání (fetch na endpoint)
       form.reset();
     });
 
-    // убираем подсветку ошибки при вводе
+    // při psaní odebíráme zvýraznění chyby
     form.querySelectorAll("input, textarea").forEach((el) => {
       el.addEventListener("input", () => {
         const group = el.closest(".field");
@@ -128,30 +128,30 @@
   }
 
   /* --------------------------------------------------------------------- */
-  /* 5. Хедер: прячется при скролле вниз, появляется при скролле вверх       */
+  /* 5. Hlavička: skryje se při scrollu dolů, objeví se při scrollu nahoru  */
   /* --------------------------------------------------------------------- */
   const header = document.querySelector(".header");
   if (header) {
-    const TOP_ZONE = 120;   // у самого верха хедер в исходном виде поверх hero
-    const DELTA = 6;        // порог, чтобы не дёргаться от микродвижений
+    const TOP_ZONE = 120;   // úplně nahoře hlavička v původní podobě nad hero
+    const DELTA = 6;        // práh, aby neposkakovala při mikropohybech
     let lastY = window.scrollY;
     let ticking = false;
 
     function onScroll() {
       ticking = false;
-      if (document.body.classList.contains("nav-open")) return;   // меню открыто — хедер не трогаем
+      if (document.body.classList.contains("nav-open")) return;   // menu otevřené — hlavičku neměníme
       const y = window.scrollY;
 
-      if (y <= TOP_ZONE) {                 // у самого верха — парящий хедер над hero
+      if (y <= TOP_ZONE) {                 // úplně nahoře — plovoucí hlavička nad hero
         header.classList.remove("is-pinned", "is-hidden");
         lastY = y;
         return;
       }
       if (Math.abs(y - lastY) < DELTA) return;
 
-      if (y > lastY) {                     // вниз — плавно уезжает наверх
+      if (y > lastY) {                     // dolů — plynule odjíždí nahoru
         header.classList.add("is-hidden");
-      } else {                             // вверх — закрепляем у края и показываем
+      } else {                             // nahoru — ukotvíme u okraje a ukážeme
         header.classList.add("is-pinned");
         header.classList.remove("is-hidden");
       }
@@ -167,7 +167,7 @@
   }
 
   /* --------------------------------------------------------------------- */
-  /* 6. Мобильное меню (гамбургер → полноэкранный оверлей)                  */
+  /* 6. Mobilní menu (hamburger → celoobrazovkový overlay)                  */
   /* --------------------------------------------------------------------- */
   const navToggle = document.getElementById("navToggle");
   const mobileMenu = document.getElementById("mobileMenu");
@@ -177,28 +177,28 @@
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
       mobileMenu.setAttribute("aria-hidden", open ? "false" : "true");
       document.body.classList.toggle("nav-open", open);
-      if (open && header) header.classList.remove("is-hidden");   // пока меню открыто — хедер виден
+      if (open && header) header.classList.remove("is-hidden");   // dokud je menu otevřené, hlavička je vidět
     };
 
     navToggle.addEventListener("click", () => {
       setMenu(!mobileMenu.classList.contains("is-open"));
     });
-    // клик по пункту — закрываем (плавный скролл к якорю отрабатывает сам)
+    // klik na položku — zavřeme (plynulý scroll na kotvu se postará sám)
     mobileMenu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", () => setMenu(false));
     });
-    // Esc закрывает
+    // Esc zavírá
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && mobileMenu.classList.contains("is-open")) setMenu(false);
     });
-    // ушли на десктоп с открытым меню — закрываем, чтобы не зависло
+    // přechod na desktop s otevřeným menu — zavřeme, ať nezůstane viset
     window.addEventListener("resize", () => {
       if (window.innerWidth > 900 && mobileMenu.classList.contains("is-open")) setMenu(false);
     });
   }
 
   /* --------------------------------------------------------------------- */
-  /* 7. Плавное появление секций при скролле                                */
+  /* 7. Plynulé objevení sekcí při scrollu                                  */
   /* --------------------------------------------------------------------- */
   const reveals = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && reveals.length) {

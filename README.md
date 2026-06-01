@@ -1,54 +1,54 @@
-# TERMS a.s. — живой прототип (адаптивный, 375 → 1440)
+# TERMS a.s. — živý prototyp (responzivní, 375 → 1440)
 
-Прототип лендинга по макету Figma. Чистый HTML/CSS/JS, без сборки и зависимостей.
-Полностью отзывчивый: плавно масштабируется через `clamp()` от мобильной (375) до десктопной (1440) ширины; на `≤ 900px` раскладка перестраивается в одну колонку (по мобильному макету), меню сворачивается в полноэкранный гамбургер.
+Prototyp landing page podle Figma předlohy. Čisté HTML/CSS/JS, bez buildu a závislostí.
+Plně responzivní: plynule se škáluje přes `clamp()` od mobilní (375) po desktopovou (1440) šířku; na `≤ 900px` se rozložení přeskládá do jednoho sloupce (podle mobilní předlohy) a menu se sbalí do celoobrazovkového hamburgeru.
 
-## Как открыть
+## Jak otevřít
 
-Просто открой **`index.html`** двойным кликом в браузере.
+Stačí otevřít **`index.html`** dvojklikem v prohlížeči.
 
-Либо подними локальный сервер (полезно для шрифта/SVG без CORS-нюансов):
+Nebo spustit lokální server (vhodné pro font/SVG bez CORS komplikací):
 
 ```bash
 cd "/Users/ion/Documents/Work/Terms/Web"
 python3 -m http.server 8080
-# затем открой http://localhost:8080
+# pak otevři http://localhost:8080
 ```
 
-## Структура
+## Struktura
 
 ```
-index.html        — разметка всех секций
-styles.css        — дизайн-токены + стили
-script.js         — интерактив (аккордеон, карусель, форма, скролл-анимации)
-assets/           — шрифт ZedTextL-*.ttf (4 начертания)
-assets/img/       — фото (PNG/JPG) и логотипы/иконки (SVG)
+index.html        — značkování všech sekcí
+styles.css        — design tokeny + styly
+script.js         — interaktivita (akordeon, karusel, formulář, scroll animace)
+assets/           — font ZedTextL-*.ttf (4 řezy)
+assets/img/       — fotky (PNG/JPG) a loga/ikony (SVG)
 ```
 
-## Шрифт
+## Font
 
-Фирменный **Zed Text L** — подключён файлами из `assets/` (4 начертания):
+Firemní **Zed Text L** — připojený soubory z `assets/` (4 řezy):
 `ZedTextL-Regular`, `ZedTextL-Bold`, `ZedTextL-SemiWideRegular`, `ZedTextL-SemiWideBold`.
 
-Семейство собрано в `@font-face` так, что браузер сам выбирает нужный файл по паре
-**font-weight + font-stretch**: обычная ширина → `normal`, «Semi-Wide» (заголовки) → `112.5%`.
-Работает и на машине клиента — файлы лежат рядом, ничего доустанавливать не нужно.
+Rodina je v `@font-face` poskládaná tak, že si prohlížeč sám vybere soubor podle dvojice
+**font-weight + font-stretch**: běžná šířka → `normal`, „Semi-Wide" (nadpisy) → `112.5%`.
+Funguje i na počítači klienta — soubory leží vedle, není potřeba nic doinstalovávat.
 
-## Что «живое»
+## Co je „živé"
 
-- **Hover-состояния** кнопок, карточек, ссылок, чипов + плавное появление секций при скролле.
-- **Аккордеон «Naše odvetví»** — клик раскрывает отрасль (single-open), `+` поворачивается в `×`.
-- **Карусель «Naše realizace»** — стрелки листают проекты, крайние состояния гасят кнопки.
-- **Форма «Napište nám»** — валидация обязательных полей + состояние «отправлено» (бэкенда нет; место для реальной отправки помечено в `script.js`).
-- **Меню** — на десктопе выпадающие подменю по наведению; на мобайле (≤900px) гамбургер открывает полноэкранное оверлей-меню. Плавный скролл к секциям по клику.
-- **Адаптивность** — fluid-типографика и отступы на `clamp()`; статы и карточки «Proč nám věřit» — авто-сетка (4/3 → 2 → 1); карусель и форма перестраиваются в один столбец; в «Naše odvětví» на мобайле скрывается боковое изображение.
-- Кнопки заготовлены под кастомные анимации: у `.btn` есть свободные слои `::before`/`::after` — докрутим отдельно.
+- **Hover stavy** tlačítek, karet, odkazů, chipů + plynulé objevení sekcí při scrollu.
+- **Akordeon „Naše odvětví"** — klik rozbalí obor (single-open), `+` se otáčí na `×`.
+- **Karusel „Naše realizace"** — šipky listují projekty, krajní stavy zhasínají tlačítka.
+- **Formulář „Napište nám"** — validace povinných polí (backend není; místo pro reálné odeslání je vyznačené v `script.js`).
+- **Menu** — na desktopu rozbalovací podmenu po najetí; na mobilu (≤900px) hamburger otevírá celoobrazovkové overlay menu. Plynulý scroll k sekcím po kliku.
+- **Responzivita** — fluid typografie a odsazení přes `clamp()`; statistiky i karty „Proč nám věřit" se zalamují a centrují (3/4 → 2 → 1); karusel a formulář se přeskládají do jednoho sloupce; v „Naše odvětví" se na mobilu skrývá boční obrázek.
+- Tlačítka jsou připravená pro vlastní animace: `.btn` má volné vrstvy `::before`/`::after` — doladí se zvlášť.
 
-## Заметки по контенту (плейсхолдеры из макета)
+## Poznámky k obsahu (placeholdery z předlohy)
 
-В исходном Figma часть контента — заглушки. Перенёс «как есть», чтобы ничего не выдумывать:
+V původní Figmě je část obsahu jen výplň. Přenesl jsem „jak je", abych nic nevymýšlel:
 
-- **«Proč nám věřit»** — все 3 карточки с одинаковым текстом (так в макете). Нужны финальные тексты/иконки.
-- **«Naše realizace»** — описания проектов на lorem ipsum.
-- **Фото в «TERMS a.s.»** — экспорт ассета из Figma пришёл пустым, поэтому подтянул чистый рендер здания напрямую из узла макета.
-- **Копирайт в футере** в макете был «© 2026 Roboton» (остаток шаблона) — заменил на «© 2026 TERMS a.s.».
+- **„Proč nám věřit"** — všechny 3 karty mají stejný text (tak je to v předloze). Je potřeba finální texty/ikony.
+- **„Naše realizace"** — popisy projektů jsou lorem ipsum.
+- **Foto v „TERMS a.s."** — export assetu z Figmy přišel prázdný, proto je natažený čistý render budovy přímo z uzlu předlohy.
+- **Copyright v patičce** byl v předloze „© 2026 Roboton" (zbytek šablony) — nahrazeno za „© 2026 TERMS a.s.".
