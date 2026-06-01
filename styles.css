@@ -53,12 +53,12 @@
   --font: "Zed Text L", system-ui, -apple-system,
           "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  /* геометрия макета */
+  /* геометрия макета — fluid, артборд капится на 1440 */
   --page-w: 1440px;
-  --gutter: 40px;          /* боковые поля контента */
-  --content-w: 1360px;     /* page-w - gutter*2 */
+  --gutter: clamp(20px, 5vw, 40px);                                 /* боковые поля: 20 на мобилке → 40 на десктопе */
+  --content-w: calc(min(100%, var(--page-w)) - var(--gutter) * 2);  /* полезная ширина контента */
   --radius: 4px;
-  --section-gap: 160px;    /* вертикальный ритм между секциями */
+  --section-gap: clamp(88px, 11vw, 160px);                          /* вертикальный ритм между секциями */
 }
 
 /* ----------------------------------------------------------------------- */
@@ -86,9 +86,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 p  { margin: 0; }
 h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем дефолтные margin/bold у заголовков */
 
-/* Артборд 1440, центрируем */
+/* Артборд тянется до 1440 и центрируется */
 .page {
-  width: var(--page-w);
+  width: 100%;
+  max-width: var(--page-w);
   margin: 0 auto;
   position: relative;
   overflow: hidden;            /* клип hero-фото и т.п. за правым краем */
@@ -104,31 +105,32 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 /* "Semi-Wide" => font-stretch: semi-expanded (112.5%)                       */
 /* tracking в Figma задан в %: -2% => -0.02em, -1% => -0.01em               */
 /* ----------------------------------------------------------------------- */
+/* размеры тянутся между мобайлом (375) и десктопом (1440) через clamp */
 .display {
   font-weight: 700; font-stretch: 112.5%;
-  font-size: 56px; line-height: 1.25; letter-spacing: -0.02em;
+  font-size: clamp(36px, 29px + 1.88vw, 56px); line-height: 1.25; letter-spacing: -0.02em;
 }
 .h1 {
   font-weight: 700; font-stretch: 112.5%;
-  font-size: 42px; line-height: 1.3; letter-spacing: -0.02em;
+  font-size: clamp(28px, 23.1px + 1.31vw, 42px); line-height: 1.3; letter-spacing: -0.02em;
 }
 .h2 {
   font-weight: 700; font-stretch: 112.5%;
-  font-size: 32px; line-height: 1.35; letter-spacing: -0.02em;
+  font-size: clamp(24px, 21.2px + 0.75vw, 32px); line-height: 1.35; letter-spacing: -0.02em;
 }
 .h3 {
   font-weight: 700; font-stretch: 112.5%;
-  font-size: 21px; line-height: 1.35; letter-spacing: -0.01em;
+  font-size: clamp(18px, 16.9px + 0.28vw, 21px); line-height: 1.35; letter-spacing: -0.01em;
 }
 .title-l {
   font-weight: 400; font-stretch: 112.5%;
-  font-size: 28px; line-height: 1.25; letter-spacing: -0.02em;
+  font-size: clamp(20px, 17.2px + 0.75vw, 28px); line-height: 1.25; letter-spacing: -0.02em;
 }
 .title-m {
   font-weight: 400; font-stretch: 112.5%;
-  font-size: 21px; line-height: 1.35; letter-spacing: -0.01em;
+  font-size: clamp(20px, 19.7px + 0.09vw, 21px); line-height: 1.35; letter-spacing: -0.01em;
 }
-.body-l { font-weight: 400; font-size: 18px; line-height: 1.45; letter-spacing: -0.02em; }
+.body-l { font-weight: 400; font-size: clamp(16px, 15.3px + 0.19vw, 18px); line-height: 1.45; letter-spacing: -0.02em; }
 .body-m { font-weight: 400; font-size: 16px; line-height: 1.5;  letter-spacing: -0.02em; }
 .body-s { font-weight: 400; font-size: 14px; line-height: 1.5;  letter-spacing: 0; }
 .label-l {
@@ -249,7 +251,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   left: 50%;
   transform: translateX(-50%);
   width: var(--content-w);
-  z-index: 50;
+  z-index: 90;                /* выше оверлей-меню (80), чтобы гамбургер/крестик были кликабельны */
   display: flex;
   align-items: stretch;
   gap: 14px;
@@ -323,59 +325,99 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .nav__dropdown a:hover { background: var(--blue-50); }
 
+/* --- гамбургер (виден только на мобайле) --- */
+.nav-toggle {
+  display: none;
+  flex: none;
+  width: 52px;
+  background: var(--white);
+  border: 1px solid var(--nav-border);
+  border-radius: var(--radius);
+  align-items: center; justify-content: center;
+  transition: box-shadow .3s ease;
+}
+.nav-toggle__bars { display: flex; flex-direction: column; gap: 5px; width: 24px; }
+.nav-toggle__bars span {
+  height: 2px; width: 100%;
+  background: var(--blue-800); border-radius: 2px;
+  transition: transform .3s ease, opacity .2s ease;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* --- полноэкранное оверлей-меню (мобайл) --- */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 80;
+  background: var(--blue-800);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(28px, 6vw, 44px);
+  padding: 96px 24px 48px;
+  opacity: 0; visibility: hidden; transform: translateY(-12px);
+  transition: opacity .35s ease, transform .35s ease, visibility .35s;
+}
+.mobile-menu.is-open { opacity: 1; visibility: visible; transform: none; }
+.mobile-menu__nav { display: flex; flex-direction: column; align-items: center; gap: clamp(20px, 5vw, 32px); }
+.mobile-menu__nav a {
+  color: #fff; font-weight: 700; font-stretch: 112.5%;
+  font-size: clamp(28px, 8vw, 40px); line-height: 1.2; letter-spacing: -0.02em;
+  transition: opacity .2s ease;
+}
+.mobile-menu__nav a:hover { opacity: .7; }
+.mobile-menu__cta { margin-top: 8px; }
+
 /* =======================================================================
    HERO
    ======================================================================= */
 .hero {
   position: relative;
-  height: 521px;
   background: var(--blue-800);
   overflow: hidden;
+  display: flex; align-items: center;
+  min-height: clamp(440px, 36.2vw, 521px);
 }
 .hero__img {
   position: absolute;
-  top: 0; right: 0;
-  width: 706px; height: 521px;
-  object-fit: cover;
-  object-position: center;
+  top: 0; right: 0; height: 100%;
+  width: clamp(300px, 49%, 720px);          /* правая половина, тянется с вьюпортом */
+  object-fit: cover; object-position: center;
 }
 .hero__inner {
-  position: absolute;
-  left: 50%; top: 0;
-  transform: translateX(-50%);
+  position: relative; z-index: 1;
   width: var(--content-w);
-  height: 100%;
+  margin: 0 auto;
+  display: flex; flex-direction: column;
+  gap: clamp(24px, 2.5vw, 32px);
+  padding-block: clamp(40px, 5vw, 64px);
 }
 .hero__text {
-  position: absolute;
-  left: 0; top: 171px;
-  width: 588px;
-  display: flex; flex-direction: column; gap: 24px;
+  max-width: 588px;
+  display: flex; flex-direction: column; gap: clamp(16px, 1.8vw, 24px);
   color: var(--white);
 }
 .hero__text .display { color: var(--white); }
-.hero__text .body-m { width: 540px; color: var(--white); }
-.hero__cta {
-  position: absolute;
-  left: 0; top: 435px;
-}
+.hero__text .body-m { max-width: 540px; color: var(--white); }
+.hero__cta { align-self: flex-start; }
 
 /* =======================================================================
    REFERENCES — статистика + логотипы
    ======================================================================= */
 .references {
-  margin-top: 92px;
+  width: var(--content-w);
+  margin: clamp(56px, 7vw, 92px) auto 0;
   display: flex; flex-direction: column; align-items: center;
-  gap: 68px;
+  gap: clamp(44px, 5vw, 68px);
 }
-/* карточки статистики */
+/* карточки статистики — авто-сетка: 4 → 2 → 1 по мере сужения */
 .stats {
-  display: flex; gap: 32px; justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: clamp(16px, 2.2vw, 32px);
+  width: 100%;
 }
 .stat {
   position: relative;
-  width: 268px;
-  padding: 36px 0;
+  padding: clamp(28px, 3.6vw, 36px) 0;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
@@ -391,17 +433,16 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   transform: scale(1.02);
 }
 .stat:hover .corner { width: 40px; height: 40px; }
-.stat__num { white-space: nowrap; }
+.stat__num { white-space: nowrap; font-size: 32px; }   /* числа статов держим на 32px и на мобилке */
 .stat__label { color: var(--blue-800); }
 
 /* блок логотипов */
 .logos {
   width: 100%;
-  padding: 0 var(--gutter);
-  display: flex; flex-direction: column; align-items: center; gap: 56px;
+  display: flex; flex-direction: column; align-items: center; gap: clamp(36px, 4vw, 56px);
 }
 .logos__heading {
-  display: flex; align-items: center; gap: 44px;
+  display: flex; align-items: center; gap: clamp(20px, 3vw, 44px);
   width: 100%;
 }
 .logos__heading .line { flex: 1; height: 1px; background: var(--blue-200); }
@@ -439,13 +480,13 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .odvetvi {
   margin-top: var(--section-gap);
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 145px;
+  gap: clamp(40px, 8vw, 145px);
 }
 .odvetvi__img {
   position: relative;
   flex: none;
-  width: 550px;
-  height: 711px;            /* фиксировано — не растягивается за аккордеоном */
+  width: clamp(340px, 40%, 550px);
+  height: clamp(460px, 50vw, 711px);   /* фиксировано по высоте — не растягивается за аккордеоном */
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--blue-50) center/cover no-repeat;
@@ -483,8 +524,8 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
           transition: mask-position .85s cubic-bezier(.4, 0, .2, 1);
 }
 .odvetvi__content {
-  width: 666px;
-  display: flex; flex-direction: column; gap: 60px;
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: clamp(32px, 4vw, 60px);
 }
 .accordion { display: flex; flex-direction: column; gap: 16px; }
 .acc {
@@ -545,18 +586,22 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
    ======================================================================= */
 .why-us {
   margin-top: var(--section-gap);
-  display: flex; flex-direction: column; align-items: center; gap: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: clamp(28px, 4vw, 40px);
 }
 .why-us__title { width: 100%; text-align: center; color: var(--blue-800); }
-.why-cards { display: flex; gap: 28px; width: 100%; align-items: stretch; }
+.why-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  width: 100%;
+}
 .why-card {
   position: relative;
-  flex: 1;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
-  padding: 32px;
-  display: flex; flex-direction: column; gap: 56px;
+  padding: clamp(24px, 3vw, 32px);
+  display: flex; flex-direction: column; gap: clamp(28px, 4vw, 56px);
   color: var(--blue-800);
   transition: background-color .4s cubic-bezier(.4, 0, .2, 1),
               transform .4s cubic-bezier(.4, 0, .2, 1);
@@ -577,13 +622,13 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
    ======================================================================= */
 .projects { margin-top: var(--section-gap); }
 .projects__info {
-  width: 550px;
-  display: flex; flex-direction: column; gap: 28px;
+  max-width: 550px;
+  display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 28px);
   color: var(--blue-800);
 }
 .projects__container {
-  margin-top: 28px;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 22px;
+  margin-top: clamp(24px, 3vw, 28px);
+  display: flex; flex-direction: column; align-items: flex-end; gap: clamp(18px, 2vw, 22px);
 }
 .carousel-nav { display: flex; gap: 12px; }
 .carousel-btn {
@@ -602,39 +647,39 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   overflow: hidden;
 }
 .carousel-track {
-  display: flex; gap: 24px;
+  display: flex; gap: clamp(16px, 1.8vw, 24px);
+  align-items: stretch;                       /* карточки равной высоты */
   transition: transform .5s cubic-bezier(.4, 0, .2, 1);
 }
 .project {
   flex: none;
-  display: flex; gap: 24px;
-  width: 1024px;
-  height: 532px;
+  display: flex; gap: clamp(16px, 1.8vw, 24px);
+  width: min(1024px, 88%);                     /* одна карточка + «выглядывающая» следующая */
 }
 .project__img {
-  flex: none;
-  width: 450px; height: 532px;
+  flex: 0 0 44%;
+  align-self: stretch;
+  min-height: clamp(360px, 37vw, 532px);
   border-radius: var(--radius);
   background: #d9d9d9 center/cover no-repeat;
 }
 .project__info {
-  position: relative;
-  flex: none;
-  width: 550px; height: 532px;
+  flex: 1; min-width: 0;
   background: var(--blue-50);
   border-radius: var(--radius);
   color: var(--blue-800);
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: clamp(28px, 3vw, 48px);
+  padding: clamp(24px, 2.6vw, 40px);
 }
 .project__info-top {
-  position: absolute; left: 40px; top: 40px;
-  width: 400px;
-  display: flex; flex-direction: column; gap: 60px;
+  display: flex; flex-direction: column; gap: clamp(28px, 3.4vw, 60px);
 }
-.project__info-text { display: flex; flex-direction: column; gap: 26px; }
+.project__info-text { display: flex; flex-direction: column; gap: clamp(16px, 1.8vw, 26px); }
 .project__chip { align-self: flex-start; }
 .project__link {
-  position: absolute; left: 40px; top: 464px;
-  isolation: isolate;
+  align-self: flex-start;
+  position: relative; isolation: isolate;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 0;
   border-bottom: 1px solid var(--blue-400);
@@ -668,20 +713,20 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
    ======================================================================= */
 .contact-wrap { margin-top: var(--section-gap); }
 .contact {
-  width: 1186px;
+  width: 100%; max-width: 1186px;
   margin: 0 auto;
   background: var(--blue-800);
   border-radius: var(--radius);
-  padding: 100px 68px;
+  padding: clamp(40px, 6vw, 100px) clamp(24px, 5vw, 68px);
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 70px;
+  gap: clamp(40px, 5vw, 70px);
 }
 .contact__header {
   flex: 1; max-width: 420px;
-  display: flex; flex-direction: column; gap: 60px;
+  display: flex; flex-direction: column; gap: clamp(36px, 4vw, 60px);
   color: var(--white);
 }
-.contact__intro { display: flex; flex-direction: column; gap: 28px; }
+.contact__intro { display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 28px); }
 .contact__intro .h1,
 .contact__intro .body-m { color: var(--white); }
 .contact__general { display: flex; flex-direction: column; gap: 12px; }
@@ -690,10 +735,10 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 
 .contact__form {
   flex: 1; max-width: 560px;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 44px;
+  display: flex; flex-direction: column; align-items: flex-end; gap: clamp(32px, 3.6vw, 44px);
 }
-.fields { display: flex; flex-direction: column; gap: 32px; width: 100%; }
-.field-row { display: flex; gap: 24px; width: 100%; }
+.fields { display: flex; flex-direction: column; gap: clamp(24px, 3vw, 32px); width: 100%; }
+.field-row { display: flex; gap: clamp(16px, 2vw, 24px); width: 100%; }
 .field { flex: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .field--full { width: 100%; }
 .field label { color: var(--white); padding: 0 2px; }
@@ -724,33 +769,28 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 .field.has-error textarea { border-color: #ff8e8e; }
 
 .contact__footer {
-  display: flex; align-items: flex-start; justify-content: space-between;
+  display: flex; justify-content: flex-end;
   width: 100%;
 }
-.contact__note {
-  width: 294px; color: var(--white); font-size: 14px; line-height: 1.5;
-  transition: color .2s ease;
-}
-.contact__note.is-success { color: #c8ffd9; }
 
 /* =======================================================================
    ABOUT — «TERMS a.s.»
    ======================================================================= */
 .about {
   margin-top: var(--section-gap);
-  display: flex; align-items: center; gap: 72px;
+  display: flex; align-items: center; gap: clamp(32px, 5vw, 72px);
 }
 .about__img {
-  flex: none;
-  width: 667px; height: 470px;
+  flex: 0 0 clamp(360px, 48%, 667px);
+  height: clamp(320px, 33vw, 470px);
   border-radius: var(--radius);
   object-fit: cover;
 }
 .about__text {
-  width: 550px;
-  display: flex; flex-direction: column; gap: 50px;
+  flex: 1; max-width: 550px;
+  display: flex; flex-direction: column; gap: clamp(32px, 4vw, 50px);
 }
-.about__group { display: flex; flex-direction: column; gap: 32px; color: var(--blue-800); }
+.about__group { display: flex; flex-direction: column; gap: clamp(24px, 3vw, 32px); color: var(--blue-800); }
 .about__group .body { display: flex; flex-direction: column; gap: 12px; }
 .about__text > .btn { align-self: flex-start; }   /* кнопка по содержимому, не на всю ширину */
 
@@ -761,27 +801,29 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   margin-top: var(--section-gap);
   background: var(--blue-800);
   color: var(--white);
-  padding: 48px 40px 0;
+  padding: clamp(40px, 5vw, 48px) var(--gutter) 0;
 }
-.footer__top { display: flex; flex-direction: column; gap: 68px; }
+.footer__top { display: flex; flex-direction: column; gap: clamp(40px, 5vw, 68px); }
 .footer__claim {
-  display: flex; align-items: flex-start; justify-content: space-between;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
 }
 .footer__claim .logo-big { height: 60px; width: auto; }
 .footer__claim .know-how { color: var(--white); white-space: nowrap; font-weight: 400; }   /* Semi-Wide Regular, не Bold */
+.footer-logo-m { display: none; }   /* комбинированный лого+«We Know How» — только мобайл/планшет */
 
 .footer__cols {
   border-top: 1px solid var(--blue-600);
-  padding-top: 40px;
-  display: flex; gap: 259px;
+  padding-top: clamp(28px, 4vw, 40px);
+  display: flex; gap: clamp(40px, 10vw, 259px);
+  flex-wrap: wrap;
 }
-.footer__business { width: 352px; display: flex; flex-direction: column; gap: 26px; }
+.footer__business { width: 352px; max-width: 100%; display: flex; flex-direction: column; gap: 26px; }
 .footer__business .info { display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.5; }
 .footer__business .info .strong { font-weight: 700; letter-spacing: -0.01em; }
 .footer__business .eu { width: 251px; height: 56px; object-fit: contain; }
 
 .footer__nav {
-  display: flex; gap: 82px;
+  display: flex; gap: clamp(32px, 5vw, 82px);
   color: var(--white);
 }
 .footer__nav-col { display: flex; flex-direction: column; gap: 10px; }
@@ -814,4 +856,75 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   /* лента логотипов крутится всегда — это часть дизайна */
+}
+
+/* =======================================================================
+   МОБАЙЛ / УЗКИЙ ПЛАНШЕТ ≤ 900px — одноколоночная раскладка
+   (десктопная сетка плавно сжимается через clamp/% до этого порога)
+   ======================================================================= */
+@media (min-width: 901px) {
+  .mobile-menu { display: none; }   /* на десктопе оверлея нет вовсе */
+}
+
+@media (max-width: 900px) {
+  /* ХЕДЕР: прячем десктоп-меню, показываем гамбургер в правом углу */
+  .nav { display: none; }
+  .nav-toggle { display: flex; margin-left: auto; }
+  .header { top: 20px; }
+  body.nav-open { overflow: hidden; }   /* стоп-скролл фона при открытом меню */
+
+  /* HERO: текст сверху, фото на всю ширину снизу */
+  .hero { flex-direction: column; align-items: stretch; min-height: 0; }
+  .hero__inner { padding-block: clamp(92px, 26vw, 128px) clamp(28px, 8vw, 44px); }
+  .hero__text { max-width: none; }
+  .hero__text .body-m { max-width: none; }
+  .hero__img { position: static; width: 100%; height: clamp(240px, 64vw, 360px); }
+
+  /* ODVETVI: только аккордеон, картинку слева убираем */
+  .odvetvi { gap: 0; }
+  .odvetvi__img { display: none; }
+  .acc__desc { max-width: none; }
+
+  /* PROJECTS: карточка в столбик — фото сверху, инфо снизу; стрелки по центру снизу */
+  .projects__container { align-items: center; }
+  .carousel-nav { order: 2; }
+  .project { flex-direction: column; width: min(420px, 92%); gap: 0; }   /* фото и инфо вплотную */
+  .project__img {
+    flex: none; width: 100%; min-height: 0; height: clamp(180px, 52vw, 220px);
+    border-radius: var(--radius) var(--radius) 0 0;   /* скруглён только верх */
+  }
+  .project__info {
+    gap: clamp(24px, 7vw, 40px);
+    border-radius: 0 0 var(--radius) var(--radius);   /* скруглён только низ — карточка цельная */
+    padding-block: 28px;
+  }
+
+  /* CONTACT: стек, поля по одному в ряд, кнопка на всю ширину */
+  .contact { flex-direction: column; }
+  .contact__header { width: 100%; max-width: none; }
+  .contact__form { width: 100%; max-width: none; align-items: stretch; }
+  .field-row { flex-direction: column; }
+  .contact__footer { align-items: stretch; }
+  .contact__footer .btn { width: 100%; }
+
+  /* ABOUT: фото сверху, текст и кнопка снизу (кнопка на всю ширину) */
+  .about { flex-direction: column; align-items: stretch; gap: clamp(24px, 6vw, 40px); }
+  .about__img { flex: none; width: 100%; height: clamp(220px, 56vw, 320px); }
+  .about__text { max-width: none; }
+  .about__text > .btn { align-self: stretch; }
+
+  /* FOOTER: всё в один столбец */
+  .footer__claim { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .footer__claim .logo-big,
+  .footer__claim .know-how { display: none; }              /* на мобайле — комбинированный лого */
+  .footer-logo-m { display: block; width: 100%; max-width: 240px; height: auto; }
+  .footer__cols { flex-direction: column; gap: clamp(32px, 8vw, 48px); }
+  .footer__nav { order: -1; flex-direction: column; gap: clamp(20px, 5vw, 32px); }
+  .footer__business { width: 100%; }
+  .footer__business .eu { width: clamp(220px, 70vw, 251px); height: auto; }
+  .footer__bottom {
+    flex-direction: column; align-items: center; gap: 18px;
+    text-align: center; padding: clamp(28px, 7vw, 40px) 0;
+  }
+  .footer__links { flex-wrap: wrap; justify-content: center; gap: 14px 22px; }
 }

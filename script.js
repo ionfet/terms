@@ -50,18 +50,20 @@
 
   if (track && prevBtn && nextBtn) {
     const projects = Array.from(track.children);
-    const GAP = 24;
     let index = 0;
 
+    // межкарточный отступ берём из CSS (он fluid: clamp 16→24)
+    function gap() {
+      return parseFloat(getComputedStyle(track).columnGap) || 0;
+    }
     function step() {
-      // ширина одного проекта + межкарточный отступ
-      const w = projects[0].getBoundingClientRect().width;
-      return w + GAP;
+      // ширина одного проекта + текущий отступ
+      return projects[0].getBoundingClientRect().width + gap();
     }
     function maxIndex() {
       // не уезжаем за последний проект (учитываем «выглядывающий» след. слайд)
       const viewport = track.parentElement.getBoundingClientRect().width;
-      const total = projects.length * step() - GAP;
+      const total = projects.length * step() - gap();
       const hidden = Math.max(0, total - viewport);
       return Math.ceil(hidden / step());
     }
@@ -91,10 +93,7 @@
   /* 4. Форма «Napište nám» (валидация + состояние «отправлено»)            */
   /* --------------------------------------------------------------------- */
   const form = document.getElementById("contactForm");
-  const note = document.getElementById("formNote");
   if (form) {
-    const defaultNote = note ? note.innerHTML : "";
-
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       let ok = true;
@@ -113,28 +112,10 @@
         }
       });
 
-      if (!ok) {
-        if (note) {
-          note.classList.remove("is-success");
-          note.textContent = "Zkontrolujte prosím povinná pole.";
-        }
-        return;
-      }
+      if (!ok) return;            // невалидно — поля подсвечены красным
 
       // здесь позже подключим реальную отправку (fetch на endpoint)
-      if (note) {
-        note.classList.add("is-success");
-        note.textContent = "✓ Děkujeme! Vaše zpráva byla odeslána. Ozveme se do 24 hodin.";
-      }
       form.reset();
-
-      // вернуть исходный текст через 6 c
-      setTimeout(() => {
-        if (note) {
-          note.classList.remove("is-success");
-          note.innerHTML = defaultNote;
-        }
-      }, 6000);
     });
 
     // убираем подсветку ошибки при вводе
@@ -158,6 +139,7 @@
 
     function onScroll() {
       ticking = false;
+      if (document.body.classList.contains("nav-open")) return;   // меню открыто — хедер не трогаем
       const y = window.scrollY;
 
       if (y <= TOP_ZONE) {                 // у самого верха — парящий хедер над hero
@@ -185,7 +167,38 @@
   }
 
   /* --------------------------------------------------------------------- */
-  /* 6. Плавное появление секций при скролле                                */
+  /* 6. Мобильное меню (гамбургер → полноэкранный оверлей)                  */
+  /* --------------------------------------------------------------------- */
+  const navToggle = document.getElementById("navToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+  if (navToggle && mobileMenu) {
+    const setMenu = (open) => {
+      mobileMenu.classList.toggle("is-open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      mobileMenu.setAttribute("aria-hidden", open ? "false" : "true");
+      document.body.classList.toggle("nav-open", open);
+      if (open && header) header.classList.remove("is-hidden");   // пока меню открыто — хедер виден
+    };
+
+    navToggle.addEventListener("click", () => {
+      setMenu(!mobileMenu.classList.contains("is-open"));
+    });
+    // клик по пункту — закрываем (плавный скролл к якорю отрабатывает сам)
+    mobileMenu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setMenu(false));
+    });
+    // Esc закрывает
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mobileMenu.classList.contains("is-open")) setMenu(false);
+    });
+    // ушли на десктоп с открытым меню — закрываем, чтобы не зависло
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900 && mobileMenu.classList.contains("is-open")) setMenu(false);
+    });
+  }
+
+  /* --------------------------------------------------------------------- */
+  /* 7. Плавное появление секций при скролле                                */
   /* --------------------------------------------------------------------- */
   const reveals = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && reveals.length) {

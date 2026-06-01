@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1440" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TERMS a.s. — Technologie pro moderní svět</title>
   <meta name="description" content="Navrhujeme a realizujeme technologická řešení pro průmysl a energetiku." />
   <link rel="stylesheet" href="styles.css" />
@@ -56,11 +56,26 @@
           <a class="nav__item" href="#o-nas">O nás</a>
         </div>
       </nav>
+      <!-- гамбургер (только мобайл) -->
+      <button class="nav-toggle" id="navToggle" type="button"
+              aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="nav-toggle__bars"><span></span><span></span><span></span></span>
+      </button>
     </header>
+
+    <!-- полноэкранное оверлей-меню (только мобайл) -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <nav class="mobile-menu__nav">
+        <a href="#odvetvi">Energetika</a>
+        <a href="#odvetvi">Automatizace</a>
+        <a href="#odvetvi">Strojní výroba</a>
+        <a href="#o-nas">O nás</a>
+      </nav>
+      <a class="btn btn--stripe mobile-menu__cta" href="#kontakt"><span class="btn__t">Kontaktujte nás</span></a>
+    </div>
 
     <!-- ============================ HERO ============================ -->
     <section class="hero">
-      <img class="hero__img" src="assets/img/hero.png" alt="Technik v průmyslovém provozu" />
       <div class="hero__inner">
         <div class="hero__text">
           <h1 class="display">Technologie<br />pro moderní svět</h1>
@@ -69,6 +84,7 @@
         </div>
         <a class="btn btn--stripe hero__cta" href="#kontakt"><span class="btn__t">Kontaktujte nás</span></a>
       </div>
+      <img class="hero__img" src="assets/img/hero.png" alt="Technik v průmyslovém provozu" />
     </section>
 
     <main>
@@ -301,7 +317,7 @@
           <div class="contact__header">
             <div class="contact__intro">
               <h2 class="h1">Napište nám</h2>
-              <p class="body-m">We’d love to hear from you — send us<br />a message and we’ll be in touch soon.</p>
+              <p class="body-m">We’d love to hear from you — send us a message and we’ll be in touch soon.</p>
             </div>
             <div class="contact__general">
               <span class="label">GENERAL CONTACT</span>
@@ -339,7 +355,6 @@
               </div>
             </div>
             <div class="contact__footer">
-              <p class="contact__note" id="formNote">Thank you for your message.<br />We will get back to you within 24 hours.</p>
               <button class="btn btn--stripe" type="submit"><span class="btn__t">Odeslat</span></button>
             </div>
           </form>
@@ -369,6 +384,7 @@
         <div class="footer__claim">
           <img class="logo-big" src="assets/img/logo-footer.svg" alt="TERMS" />
           <span class="know-how h1">We Know How</span>
+          <img class="footer-logo-m" src="assets/footer-logo.svg" alt="TERMS — We Know How" />
         </div>
         <div class="footer__cols">
           <div class="footer__business">
