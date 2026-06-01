@@ -299,6 +299,9 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .nav__item:hover .chev { transform: rotate(180deg); }
 
+/* группа = контекст позиционирования, чтобы дропдаун котвился под своим пунктом (левый край nav), а не под лого */
+.nav__group { position: relative; }
+
 /* выпадающее подменю */
 .nav__dropdown {
   position: absolute;
@@ -373,30 +376,30 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   position: relative;
   background: var(--blue-800);
   overflow: hidden;
-  display: flex; align-items: center;
+  display: flex; align-items: flex-end;            /* контент прижат к низу */
   min-height: clamp(440px, 36.2vw, 521px);
+  padding-top: clamp(104px, 11vw, 150px);          /* резерв сверху под фикс-меню — текст не лезет под меню */
 }
 .hero__img {
   position: absolute;
   top: 0; right: 0; height: 100%;
-  width: clamp(300px, 49%, 720px);          /* правая половина, тянется с вьюпортом */
+  width: 50%;                                      /* ровно половина hero */
   object-fit: cover; object-position: center;
 }
 .hero__inner {
   position: relative; z-index: 1;
-  width: var(--content-w);
-  margin: 0 auto;
+  width: 50%;                                      /* левая половина: текст всегда рядом, не под фото */
+  padding: 0 clamp(28px, 3vw, 48px) 48px var(--gutter);
   display: flex; flex-direction: column;
-  gap: clamp(24px, 2.5vw, 32px);
-  padding-block: clamp(40px, 5vw, 64px);
+  gap: clamp(20px, 2.4vw, 28px);
+  color: var(--white);
 }
 .hero__text {
-  max-width: 588px;
-  display: flex; flex-direction: column; gap: clamp(16px, 1.8vw, 24px);
+  display: flex; flex-direction: column; gap: clamp(14px, 1.6vw, 22px);
   color: var(--white);
 }
 .hero__text .display { color: var(--white); }
-.hero__text .body-m { max-width: 540px; color: var(--white); }
+.hero__text .body-m { color: var(--white); }
 .hero__cta { align-self: flex-start; }
 
 /* =======================================================================
@@ -408,15 +411,17 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   display: flex; flex-direction: column; align-items: center;
   gap: clamp(44px, 5vw, 68px);
 }
-/* карточки статистики — авто-сетка: 4 → 2 → 1 по мере сужения */
+/* карточки статистики — flex с переносом и центрированием:
+   неполный ряд (напр. 3 + 1) выравнивается по центру, а не липнет влево */
 .stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  display: flex; flex-wrap: wrap; justify-content: center;
   gap: clamp(16px, 2.2vw, 32px);
   width: 100%;
 }
 .stat {
   position: relative;
+  flex: none;
+  width: 268px;
   padding: clamp(28px, 3.6vw, 36px) 0;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -590,13 +595,14 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
 }
 .why-us__title { width: 100%; text-align: center; color: var(--blue-800); }
 .why-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  display: flex; flex-wrap: wrap; justify-content: center;
   gap: clamp(16px, 2vw, 28px);
   width: 100%;
 }
 .why-card {
   position: relative;
+  flex: none;
+  width: 380px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
@@ -873,17 +879,20 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   .header { top: 20px; }
   body.nav-open { overflow: hidden; }   /* стоп-скролл фона при открытом меню */
 
+  /* STATS / WHY-US: на узких карточки тянутся — 2 в ряд на планшете, 1 на телефоне */
+  .stat { flex: 1 1 280px; width: auto; }
+  .why-card { flex: 1 1 300px; width: auto; max-width: 480px; }   /* осиротевшая карта не растягивается на всю ширину */
+
   /* HERO: текст сверху, фото на всю ширину снизу */
-  .hero { flex-direction: column; align-items: stretch; min-height: 0; }
-  .hero__inner { padding-block: clamp(92px, 26vw, 128px) clamp(28px, 8vw, 44px); }
-  .hero__text { max-width: none; }
-  .hero__text .body-m { max-width: none; }
+  .hero { flex-direction: column; align-items: stretch; min-height: 0; padding-top: 0; }
+  .hero__inner { width: 100%; padding: clamp(92px, 26vw, 128px) var(--gutter) clamp(28px, 8vw, 44px); }
+  .hero__text .body-m { max-width: 520px; }   /* не растягивать абзац на всю ширину */
   .hero__img { position: static; width: 100%; height: clamp(240px, 64vw, 360px); }
 
   /* ODVETVI: только аккордеон, картинку слева убираем */
   .odvetvi { gap: 0; }
   .odvetvi__img { display: none; }
-  .acc__desc { max-width: none; }
+  .acc__desc { max-width: 520px; }
 
   /* PROJECTS: карточка в столбик — фото сверху, инфо снизу; стрелки по центру снизу */
   .projects__container { align-items: center; }
@@ -911,6 +920,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   .about { flex-direction: column; align-items: stretch; gap: clamp(24px, 6vw, 40px); }
   .about__img { flex: none; width: 100%; height: clamp(220px, 56vw, 320px); }
   .about__text { max-width: none; }
+  .about__group .body { max-width: 520px; }
   .about__text > .btn { align-self: stretch; }
 
   /* FOOTER: всё в один столбец */
@@ -919,8 +929,9 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* убираем 
   .footer__claim .know-how { display: none; }              /* на мобайле — комбинированный лого */
   .footer-logo-m { display: block; width: 100%; max-width: 240px; height: auto; }
   .footer__cols { flex-direction: column; gap: clamp(32px, 8vw, 48px); }
-  .footer__nav { order: -1; flex-direction: column; gap: clamp(20px, 5vw, 32px); }
+  .footer__nav { order: -1; flex-direction: column; gap: 10px; }   /* как внутри footer__nav-col — единый ровный список */
   .footer__business { width: 100%; }
+  .footer__business .info { max-width: 520px; }
   .footer__business .eu { width: clamp(220px, 70vw, 251px); height: auto; }
   .footer__bottom {
     flex-direction: column; align-items: center; gap: 18px;
