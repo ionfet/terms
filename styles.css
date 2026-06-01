@@ -951,3 +951,11 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* odstraňujeme v
   }
   .footer__links { flex-wrap: wrap; justify-content: center; gap: 14px 22px; }
 }
+
+/* =======================================================================
+   TELEFON ≤ 480px — menší titulek hero a větší odstup od menu
+   ======================================================================= */
+@media (max-width: 480px) {
+  .hero__inner { padding-top: 140px; }      /* víc prostoru pod fixní menu */
+  .hero__text .display { font-size: 32px; } /* titulek nekoliduje s menu */
+}
