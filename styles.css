@@ -12,22 +12,22 @@
 /* ----------------------------------------------------------------------- */
 @font-face {
   font-family: "Zed Text L";
-  src: url("assets/ZedTextL-Regular.ttf") format("truetype");
+  src: url("assets/fonts/ZedTextL-Regular.ttf") format("truetype");
   font-weight: 400; font-stretch: normal; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "Zed Text L";
-  src: url("assets/ZedTextL-Bold.ttf") format("truetype");
+  src: url("assets/fonts/ZedTextL-Bold.ttf") format("truetype");
   font-weight: 700; font-stretch: normal; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "Zed Text L";
-  src: url("assets/ZedTextL-SemiWideRegular.ttf") format("truetype");
+  src: url("assets/fonts/ZedTextL-SemiWideRegular.ttf") format("truetype");
   font-weight: 400; font-stretch: 112.5%; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "Zed Text L";
-  src: url("assets/ZedTextL-SemiWideBold.ttf") format("truetype");
+  src: url("assets/fonts/ZedTextL-SemiWideBold.ttf") format("truetype");
   font-weight: 700; font-stretch: 112.5%; font-style: normal; font-display: swap;
 }
 

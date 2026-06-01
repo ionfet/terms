@@ -21,13 +21,13 @@ python3 -m http.server 8080
 index.html        — značkování všech sekcí
 styles.css        — design tokeny + styly
 script.js         — interaktivita (akordeon, karusel, formulář, scroll animace)
-assets/           — font ZedTextL-*.ttf (4 řezy)
+assets/fonts/     — font ZedTextL-*.ttf (4 řezy)
 assets/img/       — fotky (PNG/JPG) a loga/ikony (SVG)
 ```
 
 ## Font
 
-Firemní **Zed Text L** — připojený soubory z `assets/` (4 řezy):
+Firemní **Zed Text L** — připojený soubory z `assets/fonts/` (4 řezy):
 `ZedTextL-Regular`, `ZedTextL-Bold`, `ZedTextL-SemiWideRegular`, `ZedTextL-SemiWideBold`.
 
 Rodina je v `@font-face` poskládaná tak, že si prohlížeč sám vybere soubor podle dvojice
