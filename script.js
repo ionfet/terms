@@ -217,4 +217,55 @@
   } else {
     reveals.forEach((el) => el.classList.add("in-view"));
   }
+
+  /* --------------------------------------------------------------------- */
+  /* 8. Počítání čísel ve statistikách (naběhnou od nuly při scrollu)        */
+  /* --------------------------------------------------------------------- */
+  const statNums = Array.from(document.querySelectorAll(".stat__num"));
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (statNums.length && "IntersectionObserver" in window && !reduceMotion) {
+    // české oddělení tisíců (10 000) — nezalomitelnou mezerou
+    const formatCz = (n) => n.toLocaleString("cs-CZ");
+
+    // z textu vytáhneme číslo a zapamatujeme si zbytek (suffix: „ +", „ + let")
+    const items = statNums.map((el) => {
+      const full = el.textContent;
+      const m = full.match(/^[\d\s ]*\d/);            // vedoucí číslo i s mezerami mezi tisíci
+      if (!m) return null;
+      const numStr = m[0];
+      const target = parseInt(numStr.replace(/[\s ]/g, ""), 10);
+      const suffix = full.slice(numStr.length);
+      el.textContent = "0" + suffix;                       // start od nuly
+      return { el, target, suffix, full };
+    }).filter(Boolean);
+
+    function countUp(item) {
+      const dur = 1400;
+      let start = null;
+      function frame(ts) {
+        if (start === null) start = ts;
+        const p = Math.min(1, (ts - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);              // ease-out cubic
+        if (p < 1) {
+          item.el.textContent = formatCz(Math.round(item.target * eased)) + item.suffix;
+          window.requestAnimationFrame(frame);
+        } else {
+          item.el.textContent = item.full;                // přesně původní text
+        }
+      }
+      window.requestAnimationFrame(frame);
+    }
+
+    const statIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const item = items.find((it) => it.el === entry.target);
+        if (item) countUp(item);
+        statIO.unobserve(entry.target);
+      });
+    }, { threshold: 0.4 });
+
+    items.forEach((it) => statIO.observe(it.el));
+  }
 })();

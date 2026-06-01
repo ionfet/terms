@@ -30,9 +30,9 @@ assets/img/       — fotky (PNG/JPG) a loga/ikony (SVG)
 Firemní **Zed Text L** — připojený soubory z `assets/fonts/` (4 řezy):
 `ZedTextL-Regular`, `ZedTextL-Bold`, `ZedTextL-SemiWideRegular`, `ZedTextL-SemiWideBold`.
 
-Rodina je v `@font-face` poskládaná tak, že si prohlížeč sám vybere soubor podle dvojice
-**font-weight + font-stretch**: běžná šířka → `normal`, „Semi-Wide" (nadpisy) → `112.5%`.
-Funguje i na počítači klienta — soubory leží vedle, není potřeba nic doinstalovávat.
+Řezy jsou rozdělené do dvou rodin: **`Zed Text L`** (běžná šířka — text) a
+**`Zed Text L SemiWide`** (širší řez — nadpisy). Nadpisy si rodinu berou z proměnné
+`--font-wide`. Funguje i na počítači klienta — soubory leží vedle, není potřeba nic doinstalovávat.
 
 ## Co je „živé"
 
