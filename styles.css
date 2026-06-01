@@ -379,8 +379,8 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* odstraňujeme v
   display: flex; align-items: flex-end;            /* obsah přitisknutý dolů */
   /* výška = max(min-height, rezerva-pod-menu + obsah + spodní padding);
      na úzkých roste s počtem řádků titulku, takže nikdy nekoliduje s menu */
-  min-height: clamp(460px, 36.2vw, 521px);
-  padding-top: clamp(120px, 12vw, 156px);          /* rezerva nahoře pod fixní menu (header má dole ~80px) */
+  min-height: clamp(460px, 36.2vw, 540px);
+  padding-top: clamp(150px, 15vw, 196px);          /* rezerva nahoře pod fixní menu (header má dole ~80px) */
 }
 .hero__img {
   position: absolute;
