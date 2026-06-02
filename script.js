@@ -142,11 +142,13 @@
       if (document.body.classList.contains("nav-open")) return;   // menu otevřené — hlavičku neměníme
       const y = window.scrollY;
 
-      if (y <= TOP_ZONE) {                 // úplně nahoře — plovoucí hlavička nad hero
+      if (y <= TOP_ZONE) {                 // úplně nahoře — odlehčená hlavička nad hero
+        header.classList.add("is-top");
         header.classList.remove("is-pinned", "is-hidden");
         lastY = y;
         return;
       }
+      header.classList.remove("is-top");   // už nejsme nad hero — plné plošky
       if (Math.abs(y - lastY) < DELTA) return;
 
       if (y > lastY) {                     // dolů — plynule odjíždí nahoru
@@ -164,6 +166,8 @@
         ticking = true;
       }
     }, { passive: true });
+
+    onScroll();   // počáteční stav (kdyby se stránka načetla už odscrollovaná)
   }
 
   /* --------------------------------------------------------------------- */

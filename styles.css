@@ -264,22 +264,26 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* odstraňujeme v
 .header.is-pinned .nav { box-shadow: 0 8px 24px rgba(3, 69, 217, .10); }
 /* scroll dolů — plynule odjíždí za horní okraj */
 .header.is-hidden { transform: translateX(-50%) translateY(-200%); }
+
+/* Odlehčená „frosted" hlavička nad hero (is-top) je jen na mobilu (≤900px),
+   kde CTA „Kontaktujte nás" sedí hned pod menu — viz mobilní blok níže.
+   Na desktopu zůstává hlavička pořád plná bílá. */
 .brand {
   display: flex; align-items: center;
   background: var(--white);
   border: 1px solid var(--nav-border);
   border-radius: var(--radius);
   padding: 11px 16px;
-  transition: box-shadow .3s ease;
+  transition: box-shadow .3s ease, background-color .3s ease, border-color .3s ease;
 }
-.brand img { height: 18px; width: auto; }
+.brand img { height: 18px; width: auto; transition: filter .3s ease; }
 
 .nav {
   display: flex;
   background: var(--white);
   border: 1px solid var(--nav-border);
   border-radius: var(--radius);
-  transition: box-shadow .3s ease;
+  transition: box-shadow .3s ease, background-color .3s ease, border-color .3s ease;
 }
 .nav__item {
   position: relative;
@@ -337,13 +341,13 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* odstraňujeme v
   border: 1px solid var(--nav-border);
   border-radius: var(--radius);
   align-items: center; justify-content: center;
-  transition: box-shadow .3s ease;
+  transition: box-shadow .3s ease, background-color .3s ease, border-color .3s ease;
 }
 .nav-toggle__bars { display: flex; flex-direction: column; gap: 5px; width: 24px; }
 .nav-toggle__bars span {
   height: 2px; width: 100%;
   background: var(--blue-800); border-radius: 2px;
-  transition: transform .3s ease, opacity .2s ease;
+  transition: transform .3s ease, opacity .2s ease, background-color .3s ease;
 }
 .nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2) { opacity: 0; }
@@ -824,7 +828,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* odstraňujeme v
 .footer__claim {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
 }
-.footer__claim .logo-big { height: 60px; width: auto; }
+.footer__claim .logo-big { height: 90px; width: auto; }
 .footer__claim .know-how { color: var(--white); white-space: nowrap; font-weight: 400; }   /* Semi-Wide Regular, ne Bold */
 .footer-logo-m { display: none; }   /* kombinované logo + „We Know How" — jen mobil/tablet */
 
@@ -891,6 +895,19 @@ h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: inherit; }   /* odstraňujeme v
   .nav-toggle { display: flex; margin-left: auto; }
   .header { top: 20px; }
   body.nav-open { overflow: hidden; }   /* stop-scroll pozadí při otevřeném menu */
+
+  /* NAD HERO (is-top): odlehčené „frosted" plošky, ať nepřebíjí CTA „Kontaktujte nás".
+     Po scrollu (is-pinned) se vrátí plné bílé plošky kvůli čitelnosti nad světlými sekcemi. */
+  .header.is-top .brand,
+  .header.is-top .nav-toggle {
+    background: rgba(255, 255, 255, .15);
+    border-color: rgba(255, 255, 255, .35);
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .header.is-top .brand img { filter: brightness(0) invert(1); }    /* modré logo → bílé */
+  .header.is-top .nav-toggle__bars span { background: var(--white); }
 
   /* STATS / WHY-US: na úzkých se karty táhnou — 2 v řadě na tabletu, 1 na telefonu */
   .stat { flex: 1 1 280px; width: auto; }
